@@ -1,0 +1,31 @@
+.sidebar {
+	font-size: medium;
+}
+
+.form-horizontal .label-align-left.control-label {
+	text-align: left;
+}
+
+.table>thead>tr>th.table-input-header {
+	padding: 3px;
+}
+
+.table>thead>tr>th.table-action-glyphicon {
+	padding: 0px;
+	font-size: 22px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.table>tbody>tr>td.table-action-glyphicon {
+	padding: 0px;
+	font-size: 22px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.table-input-field {
+	padding-left: 5px;
+	border: 2px solid beige;
+	font-weight: normal;
+}
