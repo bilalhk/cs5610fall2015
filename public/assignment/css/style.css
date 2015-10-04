@@ -28,4 +28,22 @@
 	padding-left: 5px;
 	border: 2px solid beige;
 	font-weight: normal;
+	width: 90%;
+}
+
+.tab-content {
+	border: 2px solid beige;
+	padding: 10px;
+}
+
+.form-glyphicon {
+	font-size: 30px;
+}
+
+.form-fields-hr {
+	border-top: 3px solid #eee;
+}
+
+.table-with-min-width {
+	min-width: 768px;
 }
