@@ -4,14 +4,23 @@
 	
 	function headerController($scope, $location) {
 		
-		var headerNavs = [{name: "Username", link: "#"}, {name: "Logout", link: "#"}];
-		console.log($location.url().match("/home + /forms") != null);
-		if ($location.url().match("/profile + /forms") != null) {
-			$scope.headerNavs = headerNavs;
-		} else if ($location.url().match("/home + /admin + /Register + /Login") != null) {
-			var extraHeaderNavs = [{name: "Register", link: "#/Register"}, {name: "Login", link: "#/Login"}];
-			$scope.headerNavs = extraHeaderNavs.concat(headerNavs);
-		}
+		var mainHeaderNavs = [
+			{name: "Username", link: "#"},
+			{name: "Logout", link: "#"}];
+			
+		var loggedOutHeaderNavs = [
+			{name: "Register", link: "#/register"},
+			{name: "Login", link: "#/login"}].concat(mainHeaderNavs);	
+			
+		$scope.headerNavs = loggedOutHeaderNavs;
+		
+		$scope.$on("$routeChangeStart", function(event, next, current) { 
+			if ($location.url().match("/profile|/forms")) {
+				$scope.headerNavs = mainHeaderNavs;
+			} else if ($location.url().match("/home|/admin|/register|/login")) {
+				$scope.headerNavs = loggedOutHeaderNavs;
+			}
+		});
 	}
 	
 })();
