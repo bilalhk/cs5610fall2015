@@ -1,9 +1,9 @@
-<h2>Forms</h2>
+<h2>Forms</<h2></h2>
 
 <!-- Tabs -->
 <nav>
   <ul class="nav nav-tabs">
-  <li role="presentation" class="active"><a href="forms.html">Forms</a></li>
+  <li role="presentation" class="active"><a href="#/forms">Forms</a></li>
   <li role="presentation"><a href="form-fields.html">Fields</a></li>
   </ul>
 </nav>
@@ -19,23 +19,23 @@
         </tr>
         
         <tr>
-          <th class="table-input-header"><input type="text" placeholder="username" class="table-input-field"></th>
+          <th class="table-input-header"><input type="text" placeholder="name" class="table-input-field" ng-model="newFormName"></th>
           <th class="table-action-glyphicon">
-            <span class="glyphicon glyphicon-plus"></span>
-            <span class="glyphicon glyphicon-ok"></span>
+            <span class="glyphicon glyphicon-plus clickable" ng-click="addForm()"></span>
+            <span class="glyphicon glyphicon-ok clickable" ng-click="updateForm()"></span>
           </th>
         </tr>
       </thead>
       
       <tbody>
-        <tr>
-          <td><a href="form-fields.html">Registration Form</a></td>
+        <tr ng-repeat="form in forms">
+          <td><a href="form-fields.html">{{form.name}}</a></td>
           <td class="table-action-glyphicon">
-            <span class="glyphicon glyphicon-remove"></span>
-            <span class="glyphicon glyphicon-pencil"></span>
+            <span class="glyphicon glyphicon-remove clickable" ng-click="deleteForm($index)"></span>
+            <span class="glyphicon glyphicon-pencil clickable" ng-click="selectForm($index)"></span>
           </td>
         </tr>
-        
+        <!--
         <tr>
           <td><a href="form-fields.html">Contact List</a></td>
           <td class="table-action-glyphicon">
@@ -50,7 +50,7 @@
             <span class="glyphicon glyphicon-remove"></span>
             <span class="glyphicon glyphicon-pencil"></span>
           </td>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
   </div>

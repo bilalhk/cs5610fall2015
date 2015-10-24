@@ -10,9 +10,18 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.min.js"></script>
+    
     <script src="/assignment/app.js"></script>
     <script src="/assignment/config.js"></script>
+    <script src="/assignment/util/guid.js"></script>
     <script src="/assignment/header/header.controller.js"></script>
+    <script src="/assignment/sidebar/sidebar.controller.js"></script>
+    <script src="/assignment/service/UserService.js"></script>
+    <script src="/assignment/service/FormService.js"></script>
+    <script src="/assignment/login/login.controller.js"></script>
+    <script src="/assignment/register/register.controller.js"></script>
+    <script src="/assignment/profile/profile.controller.js"></script>
+    <script src="/assignment/form/form.controller.js"></script>
     
     <title>Form Maker</title>
   </head>
@@ -20,19 +29,16 @@
   <body>
     
     <!-- Navbar -->
-    <div ng-include="'header/header.view.html'" ng-controller="HeaderController">
-    </div>
+    <div ng-include="'header/header.view.html'" ng-controller="HeaderController"></div>
     
     <div class="container-fluid">
       <div class="row">
         
         <!-- Sidebar -->
-        <div class="col-sm-2 col-md-1 sidebar" ng-include="'sidebar/sidebar.view.html'">
-        </div>
+        <div class="col-sm-2 col-md-1 sidebar" ng-include="'sidebar/sidebar.view.html'" ng-controller="SidebarController"></div>
         
         <!-- Main -->
-        <div class="col-sm-10 col-md-11 col-sm-offset-2 col-md-offset-1 main" ng-view>
-        </div>
+        <div class="col-sm-10 col-md-11 col-sm-offset-2 col-md-offset-1 main" ng-view></div>
         
       </div>
     </div>

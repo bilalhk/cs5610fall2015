@@ -47,3 +47,7 @@
 .table-with-min-width {
 	min-width: 768px;
 }
+
+.clickable {
+	cursor: pointer;
+}

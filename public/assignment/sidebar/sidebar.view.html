@@ -1,14 +1,5 @@
 <ul class="nav nav-sidebar">
-	<li class="active">
-		<a href="#/home">Home</a>
-	</li>
-	<li>
-		<a href="#/profile">Profile</a>
-	</li>
-	<li>
-		<a href="#/admin">Admin</a>
-	</li>
-	<li>
-		<a href="#/forms">Forms</a>
+	<li ng-repeat="sidebarNav in sidebarNavs" ng-class="{active : $location.url().match(sidebarNav.name.toLowerCase())}">
+		<a href={{sidebarNav.link}}>{{sidebarNav.name}}</a>
 	</li>
 </ul>

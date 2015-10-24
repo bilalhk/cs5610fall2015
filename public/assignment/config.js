@@ -6,19 +6,23 @@
 				templateUrl: "home/home.view.html"
 			})
 			.when("/profile", {
-				templateUrl: "profile/profile.view.html"
+				templateUrl: "profile/profile.view.html",
+				controller: "ProfileController"
 			})
 			.when("/admin", {
 				templateUrl: "admin/admin.view.html"
 			})
 			.when("/forms", {
-				templateUrl: "forms/forms.view.html"
+				templateUrl: "form/form.view.html",
+				controller: "form.controller.js"
 			})
 			.when("/register", {
-				templateUrl: "register/register.view.html"
+				templateUrl: "register/register.view.html",
+				controller: "RegisterController"
 			})
 			.when("/login", {
-				templateUrl: "login/login.view.html"
+				templateUrl: "login/login.view.html",
+				controller: "LoginController"
 			})
 			.otherwise({
 				redirectTo: "/home"

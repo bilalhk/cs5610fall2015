@@ -4,15 +4,15 @@
 	
 	function headerController($scope, $location) {
 		
-		var mainHeaderNavs = [
-			{name: "Username", link: "#"},
-			{name: "Logout", link: "#"}];
+		var mainHeaderNavs = [{name: "Username", link: "#"},
+		 					  {name: "Logout", link: "#"}];
 			
-		var loggedOutHeaderNavs = [
-			{name: "Register", link: "#/register"},
-			{name: "Login", link: "#/login"}].concat(mainHeaderNavs);	
+		var loggedOutHeaderNavs = [{name: "Register", link: "#/register"},
+								   {name: "Login", link: "#/login"}]
+								   .concat(mainHeaderNavs);	
 			
 		$scope.headerNavs = loggedOutHeaderNavs;
+		$scope.$location = $location;
 		
 		$scope.$on("$routeChangeStart", function(event, next, current) { 
 			if ($location.url().match("/profile|/forms")) {
