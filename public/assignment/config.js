@@ -14,7 +14,7 @@
 			})
 			.when("/forms", {
 				templateUrl: "form/form.view.html",
-				controller: "form.controller.js"
+				controller: "FormController"
 			})
 			.when("/register", {
 				templateUrl: "register/register.view.html",

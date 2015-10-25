@@ -1,8 +1,9 @@
 (function() {
 	
-	angular.module("FormAppBuilder").controller("FormController", formController);
+	angular.module("FormBuilderApp").controller("FormController", formController);
 	
 	function formController($scope, $rootScope, FormService) {
+		
 		var loggedInUser = $rootScope.user;
 		FormService.findAllFormsForUser(loggedInUser.id, findAllFormsCallback);
 		

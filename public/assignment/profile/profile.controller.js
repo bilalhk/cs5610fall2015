@@ -3,7 +3,7 @@
 	angular.module("FormBuilderApp").controller("ProfileController", profileController);
 	
 	function profileController($scope, $rootScope, $location, UserService) {
-		var loggedInUser = $rootScope.user;
+		var loggedInUser = $rootScope.user
 		
 		$scope.username = loggedInUser.username;
 		$scope.password = loggedInUser.password;
@@ -20,7 +20,9 @@
 		}
 		
 		function updateUserCallback(user) {
+			console.log($rootScope.user);
 			$rootScope.user = user;
+			console.log($rootScope.user);
 			$location.url("/profile");
 		}
 	}
