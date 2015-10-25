@@ -1,4 +1,5 @@
 var guid = (function() {
+	"use strict"
 	
 	function guid() {
 		function s4() {
