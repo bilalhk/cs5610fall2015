@@ -1,0 +1,14 @@
+<div class="container-fluid" ng-controller="CharacterGenerationController">
+	<div class="row">
+		<div class="col-sm-12">
+			<h2>Generate Character</h2>
+		</div>
+		
+		<!-- Searchbar -->
+		<div class="col-sm-12" ng-include="'character_searchbar/searchbar.view.html'" ng-controller="SearchbarController"></div>
+		
+		<!-- Character card -->
+		<div class="col-sm-12 col-md-3" ng-include="'character_card/card.view.html'" ng-controller="CardController"></div>
+		
+	</div>
+</div>

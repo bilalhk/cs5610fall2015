@@ -1,0 +1,58 @@
+<div class="container-fluid" ng-controller="AbilityGenerationController">
+	<div class="row">
+		<div class="col-sm-12">
+			<h2>Generate Ability</h2>
+		</div>
+		
+		<div class="col-sm-12 col-md-6 col-lg-4">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="abilityName" class="col-sm-3 col-md-4 control-label label-align-left">Name</label>
+					<div class="col-sm-12 col-md-8">
+						<input type="text" class="form-control" id="abilityName" placeholder="Name" ng-model="name">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="abilityDamage" class="col-sm-3 col-md-4 control-label label-align-left">Damage</label>
+					<div class="col-sm-12 col-md-8">
+						<input type="number" class="form-control" id="abilityDamage" placeholder="Damage" ng-model="damage">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="statusEffect" class="col-sm-3 col-md-4 control-label label-align-left">Status Effect</label>
+					<div class="col-sm-12 col-md-8">
+						<select class="form-control" id="statusEffect" ng-model="statusEffect">
+							<option>No Status Effect</option>
+							<option>Stunned</option>
+							<option>Poisoned</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="abilityStatusEffectHitChance" class="col-sm-3 col-md-4 control-label label-align-left">Status Effect Hit %</label>
+					<div class="col-sm-12 col-md-8">
+						<input type="number" class="form-control" id="abilityStatusEffectHitChance" placeholder="0" ng-model="statusEffectHitChance">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="abilityWisdomPoints" class="col-sm-3 col-md-4 control-label label-align-left">Wisdom Points</label>
+					<div class="col-sm-12 col-md-8">
+						<input type="number" class="form-control" id="abilityWisdomPoints" placeholder="10" ng-model="wisdomPoints">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-9 col-md-5 col-sm-offset-3 col-md-offset-4">
+						<button type="submit" class="btn btn-primary btn-block" ng-click="addAbility()">Add Ability</button>
+					</div>
+				</div>
+			</form>	
+		</div>
+		
+		
+	</div>
+</div>
