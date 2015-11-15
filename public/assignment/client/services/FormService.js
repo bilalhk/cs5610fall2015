@@ -3,7 +3,7 @@
 	
 	angular.module("FormBuilderApp").factory("FormService", formService);
 	
-	function formService() {
+	function formService($http) {
 		
 		var api = {
 			createFormForUser: createFormForUser,
@@ -12,42 +12,27 @@
 			updateFormById: updateFormById
 		};
 		
-		var currentForms = [];
-		
-		// String * Form * (Form -> any) -> undefined
-		function createFormForUser(userId, form, callback) {
-			var newForm = $.extend(true, {}, form);
-			newForm.id = guid();
-			newForm.userId = userId;
-			currentForms.push(newForm);
-			callback(newForm);
+		// String * Form -> Promise([Form])
+		function createFormForUser(userId, form) {
+			var url = "/api/assignment/form/user/" + userId + "/form";
+			return $http.post(url, form);
 		}
 		
-		// String * ([Form] -> any) -> undefined
-		function findAllFormsForUser(userId, callback) {
-			var userForms = currentForms.filter(function(currentForm) {
-				return currentForm.userId == userId;
-			});
-			
-			callback(userForms);
+		// String -> Promise([Form])
+		function findAllFormsForUser(userId) {
+			var url = "/api/assignment/user/" + userId + "/form";
+			return $http.get(url);
 		}
 		
-		// String * ([Form] -> any) -> undefined
-		function deleteFormById(formId, callback) {
-			currentForms = currentForms.filter(function(currentForm) {
-				return currentForm.id != formId;
-			});
-			
-			callback(currentForms);
+		// String -> Promise([Form])
+		function deleteFormById(formId) {
+			return $http.delete("/api/assignment/form/" + formId);
 		}
 		
-		// String * Form * (Form -> any) -> undefined
-		function updateFormById(formId, newForm, callback) {
-			currentForms = currentForms.map(function(currentForm) {
-				return currentForm.id == formId ? newForm : currentForm;
-			});
-			
-			callback(currentForms);
+		// String * Form -> Promise([Form])
+		function updateFormById(formId, form) {
+			var url = "/api/assignment/form/" + formId;
+			return $http.put(url, form);
 		}
 		
 		return api;

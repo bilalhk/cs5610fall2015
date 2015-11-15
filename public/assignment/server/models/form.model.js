@@ -18,6 +18,7 @@ module.exports = function() {
 	// Form -> [Form]
 	function create(form) {
 		forms.push(form);
+		
 		return forms;
 	}
 	
@@ -55,34 +56,36 @@ module.exports = function() {
 	
 	// Number * Form -> [Form]
 	function update(id, form) {
-		var outdatedForm = forms.find(function(currentForm, index, array) {
+		var index = forms.findIndex(function(currentForm, index, array) {
 			return currentForm.id == id;
 		});
+		forms[index] = form;
 		
-		outdatedForm = form;
+		return forms;
 	}
 	
 	// Number * Number * Field -> Form
 	function updateField(formId, fieldId, field) {
-		var form = forms.find(function(currentForm, index, array) {
+		var formIndex = forms.findIndex(function(currentForm, index, array) {
 			return currentForm.id == formId;
 		});
-		var oldField = form.fields.find(function(currentField, index, array) {
+		var form = forms[formIndex];
+		var fieldIndex = form.fields.findIndex(function(currentField, index, array) {
 			return currentField.id == fieldId;
 		});
-		oldField = field;
+		forms[formIndex][fieldIndex] = field;
 		
 		return form;
 	}
 	
 	// Number * Field -> Form
 	function insertField(formId, field) {
-		var form = forms.find(function(currentForm, index, array) {
+		var index = forms.findIndex(function(currentForm, index, array) {
 			return currentForm.id == formId;
 		});
-		form.fields.push(field);
+		forms[index].fields.push(field);
 		
-		return form;
+		return forms[index];
 	}
 	
 	// Number -> [Form]
@@ -96,9 +99,10 @@ module.exports = function() {
 	
 	// Number * Number -> [Field]
 	function removeField(formId, fieldId) {
-		var form = forms.find(function(currentForm, index, array) {
+		var formIndex = forms.findIndex(function(currentForm, index, array) {
 			return currentForm.id == formId;
 		});
+		var form = forms[formIndex];
 		form.fields = form.fields.filter(function(currentField, index, array) {
 			return currentField.id != fieldId;
 		});

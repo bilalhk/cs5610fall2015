@@ -11,7 +11,8 @@
 			UserService.updateUser($scope.loggedInUser.id, $scope.loggedInUser).then(updateUser);
 		}
 		
-		function updateUser(users) {
+		function updateUser(response) {
+			var users = response.data;
 			var userId = $scope.loggedInUser.id;
 			var updatedUser = users.find(function(currentUser, index, array) {
 				return currentUser.id == userId;

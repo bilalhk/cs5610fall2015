@@ -16,9 +16,7 @@
 		// String * String -> Promise(User)
 		function findUserByUsernameAndPassword(username, password) {
 			var queryString = "?username=" + username + "&password=" + password; 
-			var promise = $http.get("/api/assignment/user" + queryString);
-			
-			return promise;
+			return $http.get("/api/assignment/user" + queryString);
 		}
 		
 		// -> Promise([User])
@@ -33,12 +31,12 @@
 		
 		// String -> Promise([User])
 		function deleteUserById(userId) {
-			return $http.delete("/api/assignment/user/:" + userId);
+			return $http.delete("/api/assignment/user/" + userId);
 		}
 		
 		// String * User -> Promise(User)
 		function updateUser(userId, user) {
-			$http.put("/api/assignment/user/:" + userId, user);
+			return $http.put("/api/assignment/user/" + userId, user);
 		}
 		
 		function guid() {

@@ -1,9 +1,11 @@
 var Credentials = require("../data_definitions/credentials.js");
+var uuid = require('uuid');
 
 module.exports = function(appServer, usersModel) {
 	
 	appServer.post("/api/assignment/user", function(req, res) {
 		var user = req.body;
+		user.id = uuid.v1();
 		user = usersModel.create(user);
 		
 		res.json(user);
@@ -35,7 +37,6 @@ module.exports = function(appServer, usersModel) {
 		var id = req.params.id;
 		var user = req.body;
 		var updatedUsers = usersModel.update(id, user);
-		
 		res.json(updatedUsers);
 	})
 	

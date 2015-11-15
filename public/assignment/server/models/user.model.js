@@ -52,11 +52,11 @@ module.exports = function() {
 	
 	// Number * User -> [user]  
 	function update(id, user) {
-		var outdatedUser = users.find(function(currentUser, index, array) {
+		var index = users.findIndex(function(currentUser, index, array) {
 			return currentUser.id == id;
-		});
+		});		
+		users[index] = user;
 		
-		outdatedUser = user;
 		return users;
 	}
 	
