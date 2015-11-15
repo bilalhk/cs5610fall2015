@@ -15,7 +15,7 @@ module.exports = function() {
 	// User -> [User]
 	function create(user) {
 		users.push(user);
-		return users;
+		return user;
 	}
 	
 	// -> [User]

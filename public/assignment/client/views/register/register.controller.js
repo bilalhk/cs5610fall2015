@@ -14,11 +14,11 @@
 						   password: $scope.password,
 						   email: $scope.email};
 						   
-			UserService.createUser(newUser, createUserCallback);
+			UserService.createUser(newUser).then(loginUser);
 		}
 		
-		function createUserCallback(user) {
-			$rootScope.user = user;
+		function loginUser(response) {
+			$rootScope.user = response.data;
 			$location.url("/profile");
 		}
 	}

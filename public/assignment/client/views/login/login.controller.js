@@ -6,10 +6,10 @@
 	function loginController($scope, $rootScope, $location, UserService) {
 		
 		$scope.login = function() {
-			UserService.findUserByUsernameAndPassword($scope.username, $scope.password, loginCallback);
+			UserService.findUserByUsernameAndPassword($scope.username, $scope.password).then(loginUser);
 		}
 		
-		function loginCallback(user) {
+		function loginUser(user) {
 			if (user == null) {
 				return;
 			}

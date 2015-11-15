@@ -8,11 +8,15 @@
 		$scope.loggedInUser = $rootScope.user;
 		
 		$scope.update = function() {
-			UserService.updateUser($scope.loggedInUser.id, $scope.loggedInUser, updateUserCallback);
+			UserService.updateUser($scope.loggedInUser.id, $scope.loggedInUser).then(updateUser);
 		}
 		
-		function updateUserCallback(user) {
-			$rootScope.user = user;
+		function updateUser(users) {
+			var userId = $scope.loggedInUser.id;
+			var updatedUser = users.find(function(currentUser, index, array) {
+				return currentUser.id == userId;
+			});
+			$rootScope.user = updatedUser;
 			$location.url("/profile");
 		}
 	}

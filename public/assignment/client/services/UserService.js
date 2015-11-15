@@ -3,7 +3,7 @@
 	
 	angular.module("FormBuilderApp").factory("UserService", userService);
 	
-	function userService() {
+	function userService($http) {
 		
 		var api = {
 			findUserByUsernameAndPassword: findUserByUsernameAndPassword,
@@ -13,44 +13,32 @@
 			updateUser: updateUser			
 		};
 		
-		var currentUsers = [];
-		
-		// String * String * (User/null -> any) -> undefined
-		function findUserByUsernameAndPassword(username, password, callback) {
-			var user = currentUsers.find(function(element) {
-				return element.username == username && element.password == password;
-			});
+		// String * String -> Promise(User)
+		function findUserByUsernameAndPassword(username, password) {
+			var queryString = "?username=" + username + "&password=" + password; 
+			var promise = $http.get("/api/assignment/user" + queryString);
 			
-			callback(user == undefined ? null : user);
+			return promise;
 		}
 		
-		// ([User] -> any) -> undefined
-		function findAllUsers(callback) {
-			callback(currentUsers);
+		// -> Promise([User])
+		function findAllUsers() {
+			return $http.get("/api/assignment/user");
 		}
 		
-		// User * (User -> any) -> undefined
-		function createUser(user, callback) {
-			var newUser = $.extend(true, {}, user);
-			newUser.id = guid();
-			currentUsers.push(newUser);
-			callback(newUser);
+		// User -> Promise(User)
+		function createUser(user) {
+			return $http.post("/api/assignment/user", user);
 		}
 		
-		// String * ([User] -> any) -> undefined
-		function deleteUserById(userId, callback) {
-			currentUsers = currentUsers.filter(function(element) {
-				return element.id != userId;
-			});
+		// String -> Promise([User])
+		function deleteUserById(userId) {
+			return $http.delete("/api/assignment/user/:" + userId);
 		}
 		
-		// String * User * (User -> any) -> undefined
-		function updateUser(userId, user, callback) {
-			currentUsers = currentUsers.map(function(currentValue) {
-				return currentValue.id == userId ? user : currentValue;
-			});
-			
-			callback(user);
+		// String * User -> Promise(User)
+		function updateUser(userId, user) {
+			$http.put("/api/assignment/user/:" + userId, user);
 		}
 		
 		function guid() {

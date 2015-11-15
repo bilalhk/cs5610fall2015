@@ -4,9 +4,9 @@ module.exports = function(appServer, usersModel) {
 	
 	appServer.post("/api/assignment/user", function(req, res) {
 		var user = req.body;
-		var users = usersModel.create(user);
+		user = usersModel.create(user);
 		
-		res.json(users);
+		res.json(user);
 	})
 	
 	appServer.get("/api/assignment/user", function(req, res) {
