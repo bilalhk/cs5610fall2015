@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" ng-app="FormBuilderApp">
+  
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assignment/client/css/dashboard.css">
+    <link rel="stylesheet" href="/assignment/client/css/style.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.min.js"></script>
+    
+    <script src="/assignment/client/app.js"></script>
+    <script src="/assignment/client/config.js"></script>
+    <script src="/assignment/client/util/guid.js"></script>
+    <script src="/assignment/client/views/header/header.controller.js"></script>
+    <script src="/assignment/client/views/sidebar/sidebar.controller.js"></script>
+    <script src="/assignment/client/services/UserService.js"></script>
+    <script src="/assignment/client/services/FormService.js"></script>
+    <script src="/assignment/client/views/login/login.controller.js"></script>
+    <script src="/assignment/client/views/register/register.controller.js"></script>
+    <script src="/assignment/client/views/profile/profile.controller.js"></script>
+    <script src="/assignment/client/views/form/form.controller.js"></script>
+    
+    <title>Form Maker</title>
+  </head>
+  
+  <body>
+    
+    <!-- Navbar -->
+    <div ng-include="'views/header/header.view.html'" ng-controller="HeaderController"></div>
+    
+    <div class="container-fluid">
+      <div class="row">
+        
+        <!-- Sidebar -->
+        <div class="col-sm-2 col-md-1 sidebar" ng-include="'views/sidebar/sidebar.view.html'" ng-controller="SidebarController"></div>
+        
+        <!-- Main -->
+        <div class="col-sm-10 col-md-11 col-sm-offset-2 col-md-offset-1 main" ng-view></div>
+        
+      </div>
+    </div>
+    
+  </body>
+    
+</html>
