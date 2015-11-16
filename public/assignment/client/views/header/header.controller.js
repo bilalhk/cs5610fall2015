@@ -5,6 +5,8 @@
 	
 	function headerController($scope, $location) {
 		
+		var model = this;
+		
 		var mainHeaderNavs = [{name: "Username", link: "#"},
 		 					  {name: "Logout", link: "#"}];
 			
@@ -12,14 +14,14 @@
 								   {name: "Login", link: "#/login"}]
 								   .concat(mainHeaderNavs);	
 			
-		$scope.headerNavs = loggedOutHeaderNavs;
-		$scope.$location = $location;
+		model.headerNavs = loggedOutHeaderNavs;
+		model.$location = $location;
 		
 		$scope.$on("$routeChangeStart", function(event, next, current) { 
 			if ($location.url().match("/profile|/forms")) {
-				$scope.headerNavs = mainHeaderNavs;
+				model.headerNavs = mainHeaderNavs;
 			} else if ($location.url().match("/home|/admin|/register|/login")) {
-				$scope.headerNavs = loggedOutHeaderNavs;
+				model.headerNavs = loggedOutHeaderNavs;
 			}
 		});
 	}

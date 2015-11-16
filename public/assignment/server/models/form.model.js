@@ -78,14 +78,14 @@ module.exports = function() {
 		return form;
 	}
 	
-	// Number * Field -> Form
+	// Number * Field -> [Field]
 	function insertField(formId, field) {
 		var index = forms.findIndex(function(currentForm, index, array) {
 			return currentForm.id == formId;
 		});
 		forms[index].fields.push(field);
 		
-		return forms[index];
+		return forms[index].fields;
 	}
 	
 	// Number -> [Form]

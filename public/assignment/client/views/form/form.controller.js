@@ -3,35 +3,44 @@
 	
 	angular.module("FormBuilderApp").controller("FormController", formController);
 	
-	function formController($scope, $rootScope, FormService) {
+	function formController($rootScope, $location, FormService) {
 		
-		var loggedInUser = $rootScope.user;
+		var model = this;
+		model.userId = $rootScope.user.Id;
 		
-		FormService.findAllFormsForUser(loggedInUser.id).then(populateForms);
+		FormService.findAllFormsForUser(model.userId).then(populateForms);
 		
-		$scope.addForm = function() {
-			var newForm = {name: $scope.newFormName};
-			FormService.createFormForUser(loggedInUser.id, newForm).then(populateForms);
+		model.addForm = function() {
+			var newForm = {title: model.newFormName};
+			FormService.createFormForUser(model.userId, newForm).then(populateForms);
+			console.log("hello");
 		}
 		
-		$scope.updateForm = function() {
+		model.updateForm = function() {
 			// ??????
 		}
 		
-		$scope.deleteForm = function(index) {
-			var selectedForm = $scope.forms[index];
+		model.deleteForm = function(index) {
+			var selectedForm = model.forms[index];
 			FormService.deleteFormById(selectedForm.id).then(populateForms);
 		}
 		
-		$scope.selectForm = function(index) {
-			// ???????
+		model.selectForm = function(index) {
+			model.selectedFormId = model.forms[index].id;
+			var url = "/user/" + model.userId + "/form/" + model.selectedFormId + "/fields";
+			$location.url(url);
 		}
 		
 		function populateForms(response) {
+			console.log(response.data);
 			var userForms = response.data.filter(function(currentForm, index, array) {
-				return currentForm.userId == loggedInUser.id;
+				return currentForm.userId == model.userId;
 			});
-			$scope.forms = userForms;
+			model.forms = userForms;
+		}
+		
+		function createFormEditUrl() {
+			
 		}
 	}
 	

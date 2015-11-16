@@ -28,9 +28,9 @@ module.exports = function(appServer, formsModel) {
 	appServer.post("/api/assignment/form/:formId/field", function(req, res) {
 		var formId = req.params.formId;
 		var field = req.body;
-		var updatedForm = insertField(formId, field);
+		var updatedFields = insertField(formId, field);
 		
-		res.json(updatedForm);
+		res.json(updatedFields);
 	})
 	
 	appServer.put("/api/assignment/form/:formId/field/:fieldId", function(req, res) {

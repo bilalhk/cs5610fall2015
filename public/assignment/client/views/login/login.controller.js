@@ -3,13 +3,16 @@
 	
 	angular.module("FormBuilderApp").controller("LoginController", loginController);
 	
-	function loginController($scope, $rootScope, $location, UserService) {
+	function loginController($rootScope, $location, UserService) {
 		
-		$scope.login = function() {
-			UserService.findUserByUsernameAndPassword($scope.username, $scope.password).then(loginUser);
+		var model = this;
+		
+		model.login = function() {
+			UserService.findUserByUsernameAndPassword(model.username, model.password).then(loginUser);
 		}
 		
-		function loginUser(user) {
+		function loginUser(response) {
+			var user = response.data;
 			if (user == null) {
 				return;
 			}

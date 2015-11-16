@@ -3,15 +3,17 @@
 	
 	angular.module("FormBuilderApp").controller("SidebarController", sidebarController);
 	
-	function sidebarController($scope, $location) {
+	function sidebarController($location) {
+		
+		var model = this;
 		
 		var sidebarNavs = [{name: "Home", link: "#/home"},
 						   {name: "Profile", link: "#/profile"},
 						   {name: "Admin", link: "#/admin"},
 						   {name: "Forms", link: "#/forms"}];
 		
-		$scope.sidebarNavs = sidebarNavs;
-		$scope.$location = $location;
+		model.sidebarNavs = sidebarNavs;
+		model.$location = $location;
 	}
 	
 })();

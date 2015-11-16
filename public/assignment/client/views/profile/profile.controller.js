@@ -3,17 +3,19 @@
 	
 	angular.module("FormBuilderApp").controller("ProfileController", profileController);
 	
-	function profileController($scope, $rootScope, $location, UserService) {
+	function profileController($rootScope, $location, UserService) {
 		
-		$scope.loggedInUser = $rootScope.user;
+		var model = this;
 		
-		$scope.update = function() {
-			UserService.updateUser($scope.loggedInUser.id, $scope.loggedInUser).then(updateUser);
+		model.loggedInUser = $rootScope.user;
+		
+		model.update = function() {
+			UserService.updateUser(model.loggedInUser.id, model.loggedInUser).then(updateUser);
 		}
 		
 		function updateUser(response) {
 			var users = response.data;
-			var userId = $scope.loggedInUser.id;
+			var userId = model.loggedInUser.id;
 			var updatedUser = users.find(function(currentUser, index, array) {
 				return currentUser.id == userId;
 			});
