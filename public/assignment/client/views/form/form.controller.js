@@ -6,7 +6,7 @@
 	function formController($rootScope, $location, FormService) {
 		
 		var model = this;
-		model.userId = $rootScope.user.Id;
+		model.userId = $rootScope.user.id;
 		
 		FormService.findAllFormsForUser(model.userId).then(populateForms);
 		
@@ -33,15 +33,13 @@
 		
 		function populateForms(response) {
 			console.log(response.data);
+			console.log($rootScope.user);
 			var userForms = response.data.filter(function(currentForm, index, array) {
 				return currentForm.userId == model.userId;
 			});
 			model.forms = userForms;
 		}
 		
-		function createFormEditUrl() {
-			
-		}
 	}
 	
 })();
