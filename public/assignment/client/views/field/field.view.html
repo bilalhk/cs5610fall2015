@@ -13,12 +13,12 @@
   <form class="form-horizontal">
     
     <div class="form-group" ng-repeat="field in model.fields">
-      <label for="{{'fieldId' + field.id}}" class="col-xs-12 col-md-2 control-label label-align-left">{{field.label}}</label>
-      <div ng-switch on="field.type">
+      <label for="{{'fieldId' + field._id}}" class="col-xs-12 col-md-2 control-label label-align-left">{{field.label}}</label>
+      <div ng-switch on="field.fieldType">
         
         <div ng-switch-when="TEXT">
           <div class="col-xs-8 col-md-7">
-            <input type="text" class="form-control" id="{{'fieldId' + field.id}}" placeholder="{{field.placeholder}}">
+            <input type="text" class="form-control" id="{{'fieldId' + field._id}}" placeholder="{{field.placeholder}}">
           </div>
           <div class="col-xs-4 col-md-3 table-action-glyphicon">
             <span class="glyphicon glyphicon-pencil form-glyphicon"></span>
@@ -30,7 +30,7 @@
         
         <div ng-switch-when="EMAIL">
           <div class="col-xs-8 col-md-7">
-            <input type="email" class="form-control" id="{{'fieldId' + field.id}}" placeholder="{{field.placeholder}}">
+            <input type="email" class="form-control" id="{{'fieldId' + field._id}}" placeholder="{{field.placeholder}}">
           </div>
           <div class="col-xs-4 col-md-3 table-action-glyphicon">
             <span class="glyphicon glyphicon-pencil form-glyphicon"></span>
@@ -42,7 +42,7 @@
         
         <div ng-switch-when="TEXTAREA">
           <div class="col-xs-8 col-md-7">
-            <textarea id="{{'fieldId' + field.id}}" rows="3" placeholder="{{field.placeholder}}"></textarea>
+            <textarea id="{{'fieldId' + field._id}}" rows="3" placeholder="{{field.placeholder}}"></textarea>
           </div>
           <div class="col-xs-4 col-md-3 table-action-glyphicon">
             <span class="glyphicon glyphicon-pencil form-glyphicon"></span>
@@ -54,7 +54,7 @@
         
         <div ng-switch-when="DATE">
           <div class="col-xs-8 col-md-7">
-            <input type="date" class="form-control" id="{{'fieldId' + field.id}}">
+            <input type="date" class="form-control" id="{{'fieldId' + field._id}}">
           </div>
           <div class="col-xs-4 col-md-3 table-action-glyphicon">
             <span class="glyphicon glyphicon-pencil form-glyphicon"></span>
@@ -64,9 +64,9 @@
           </div>
         </div>
         
-        <div ng-switch-when="OPTIONS">
+        <div ng-switch-when="SELECT">
           <div class="col-xs-8 col-md-7">
-            <select class="form-control" id="{{'fieldId' + field.id}}">
+            <select class="form-control" id="{{'fieldId' + field._id}}">
               <option ng-repeat="option in field.options" value="{{option.value}}">{{option.label}}</option>
             </select>
           </div>
@@ -78,7 +78,7 @@
           </div>
         </div>
         
-        <div ng-switch-when="CHECKBOXES">
+        <div ng-switch-when="CHECKBOX">
           <div class="checkbox col-xs-8 col-md-7">
             <div ng-repeat="option in field.options">
               <label><input type="checkbox" value="{{option.value}}">{{option.label}}</label> <br>
@@ -92,7 +92,7 @@
           </div>
         </div>
         
-        <div ng-switch-when="RADIOS">
+        <div ng-switch-when="RADIO">
           <div class="col-xs-8 col-md-7 radio">
             <div ng-repeat="option in field.options">
               <label><input type="radio" value="{{option.value}}">{{option.label}}</label> <br>

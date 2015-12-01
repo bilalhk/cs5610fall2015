@@ -9,7 +9,7 @@ module.exports = function(mongoose) {
 		label: String,
 		fieldType: {
 			type: String,
-			enum: ["TEXT", "TEXTAREA", "RADIO", "CHECKBOX", "SELECT", "DATE"]
+			enum: ["TEXT", "TEXTAREA", "RADIO", "CHECKBOX", "SELECT", "DATE", "EMAIL"]
 		},
 		options: [optionSchema],
 		placeholder: String

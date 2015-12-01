@@ -22,6 +22,8 @@
 		];
 		
 		function populateFields(response) {
+			console.log("Hello");
+			console.log(response.data);
 			model.fields = response.data;
 		}
 		
@@ -59,19 +61,19 @@
 		}
 		
 		function createEmptyText() {
-			return {"id": null, "label": "New Text Field", "type": "TEXT", "placeholder": "New Field"};
+			return {"label": "New Text Field", "fieldType": "TEXT", "placeholder": "New Field"};
 		}
 		
 		function createEmptyTextArea() {
-			return {"id": null, "label": "New Text Field", "type": "TEXTAREA", "placeholder": "New Field"};
+			return {"label": "New Text Field", "fieldType": "TEXTAREA", "placeholder": "New Field"};
 		}
 		
 		function createEmptyDate() {
-			return {"id": null, "label": "New Date Field", "type": "DATE"};
+			return {"label": "New Date Field", "fieldType": "DATE"};
 		}
 		
 		function createEmptyDropdown() {
-			return {"id": null, "label": "New Dropdown", "type": "OPTIONS", "options": [
+			return {"label": "New Dropdown", "fieldType": "SELECT", "options": [
         				{"label": "Option 1", "value": "OPTION_1"},
         				{"label": "Option 2", "value": "OPTION_2"},
         				{"label": "Option 3", "value": "OPTION_3"}
@@ -79,7 +81,7 @@
 		}
 		
 		function createEmptyCheckboxes() {
-			return {"id": null, "label": "New Checkboxes", "type": "CHECKBOXES", "options": [
+			return {"label": "New Checkboxes", "fieldType": "CHECKBOX", "options": [
 						{"label": "Option A", "value": "OPTION_A"},
 						{"label": "Option B", "value": "OPTION_B"},
 						{"label": "Option C", "value": "OPTION_C"}
@@ -87,7 +89,7 @@
 		}
 		
 		function createEmptyRadio() {
-			return {"id": null, "label": "New Radio Buttons", "type": "RADIOS", "options": [
+			return {"label": "New Radio Buttons", "fieldType": "RADIO", "options": [
 						{"label": "Option X", "value": "OPTION_X"},
 						{"label": "Option Y", "value": "OPTION_Y"},
 						{"label": "Option Z", "value": "OPTION_Z"}
@@ -95,7 +97,7 @@
 		}
 		
 		function createEmptyEmail() {
-			return {"id": null, "label": "New Email Field", "type": "EMAIL", "placeholder": "New Field"};
+			return {"label": "New Email Field", "fieldType": "EMAIL", "placeholder": "New Field"};
 		}
 	}
 	

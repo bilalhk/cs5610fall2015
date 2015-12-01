@@ -12,7 +12,7 @@ var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 // connect to db
-mongoose.connect("mongodb://localhost/test");
+mongoose.connect("mongodb://localhost/cs5610");
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", initializeApp);
