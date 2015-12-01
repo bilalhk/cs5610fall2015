@@ -6,6 +6,7 @@
 	function loginController($rootScope, $location, UserService) {
 		
 		var model = this;
+		$rootScope.user = null;
 		
 		model.login = function() {
 			UserService.findUserByUsernameAndPassword(model.username, model.password).then(loginUser);

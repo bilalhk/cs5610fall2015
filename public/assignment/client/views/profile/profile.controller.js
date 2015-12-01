@@ -10,14 +10,14 @@
 		model.loggedInUser = $rootScope.user;
 		
 		model.update = function() {
-			UserService.updateUser(model.loggedInUser.id, model.loggedInUser).then(updateUser);
+			UserService.updateUser(model.loggedInUser._id, model.loggedInUser).then(updateUser);
 		}
 		
 		function updateUser(response) {
 			var users = response.data;
-			var userId = model.loggedInUser.id;
+			var userId = model.loggedInUser._id;
 			var updatedUser = users.find(function(currentUser, index, array) {
-				return currentUser.id == userId;
+				return currentUser._id == userId;
 			});
 			$rootScope.user = updatedUser;
 			$location.url("/profile");

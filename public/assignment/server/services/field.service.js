@@ -1,60 +1,56 @@
-var uuid = require('uuid');
-
-module.exports = function(appServer, formsModel) {
+module.exports = function(appServer, FormModel) {
 	
 	appServer.get("/api/assignment/form/:formId/field", function(req, res) {
 		var formId = req.params.formId;
-		var form = formsModel.findById(formId);
-		
-		res.json(form.fields);
+		FormModel.findById(formId).then(function(form) {
+			res.json(form.fields);
+		});
 	})
 	
 	appServer.get("/api/assignment/form/:formId/field/:fieldId", function(req, res) {
 		var formId = req.params.formId;
 		var fieldId = req.params.fieldId;
-		var field = getFieldByFormIdAndFieldId(formId, fieldId);
-		
-		res.json(field);
+		getFieldByFormIdAndFieldId(formId, fieldId).then(function(field) {
+			res.json(field);
+		});
 	})
 	
 	appServer.delete("/api/assignment/form/:formId/field/:fieldId", function(req, res) {
 		var formId = req.params.formId;
 		var fieldId = req.params.fieldId;
-		var fields = formsModel.removeField(formId, fieldId);
-		
-		res.json(fields);
+		FormModel.removeField(formId, fieldId).then(function(fields) {
+			res.json(fields);
+		});
 	})
 	
 	appServer.post("/api/assignment/form/:formId/field", function(req, res) {
 		var formId = req.params.formId;
 		var field = req.body;
-		var updatedFields = insertField(formId, field);
-		
-		res.json(updatedFields);
+		FormModel.insertField(formId, field).then(function(form) {
+			res.json(form);
+		});
 	})
 	
 	appServer.put("/api/assignment/form/:formId/field/:fieldId", function(req, res) {
 		var formId = req.params.formId;
 		var fieldId = req.params.fieldId;
 		var field = req.body;
-		var updatedForm = formsModel.updateField(formId, fieldId, field);
-		
-		res.json(updatedForm);
+		FormModel.updateField(formId, fieldId, field).then(function(form) {
+			res.json(form);
+		});
 	})
 	
+	// String * String -> Promise(Field)
 	function getFieldByFormIdAndFieldId(formId, fieldId) {
-		var form = formsModel.findById(formId);
-		var field = form.fields.find(function(currentField, index, array) {
-			return currentField.id == fieldId;
+		var promise = FormModel.findById(formId).then(function(form) {
+			var deferred = Q.defer();
+			var field = form.fields.find(function(currentField, index, array) {
+				return currentField._id == fieldId;
+			});
+			deferred.resolve(field);
+			return deferred.promise;
 		});
 		
-		return field;
-	}
-	
-	function insertField(formId, field) {
-		field.id = uuid.v1();
-		var updatedForm = formsModel.insertField(formId, field);
-		
-		return updatedForm;
+		return promise;
 	}
 }

@@ -1,6 +1,8 @@
 var forms = require('./form.mock.json')
 
-module.exports = function() {
+module.exports = function(mongoose) {
+	var formSchema = require('./form.schema.js')(mongoose);
+	var Q = require('q');
 	
 	var api = {
 		create: create,
@@ -15,99 +17,148 @@ module.exports = function() {
 		removeField: removeField
 	};
 	
-	// Form -> [Form]
+	var FormModel = mongoose.model("FormModel", formSchema);
+	
+	// Form -> Promise([Form])
 	function create(form) {
-		forms.push(form);
+		var promise = FormModel.create(form).then(function(form) {
+			return findAll();
+		})
 		
-		return forms;
+		return promise;
 	}
 	
-	// -> [Form]
+	// -> Promise([Form])
 	function findAll() {
-		return forms;
+		var deferred = Q.defer();
+		FormModel.find(function(err, results) {
+			deferred.resolve(results);
+		})
+		
+		return deferred.promise;
 	}
 	
-	// Number -> Form
+	// String -> Promise(Form)
 	function findById(id) {
-		var form = forms.find(function(currentForm, index, array) {
-			return currentForm.id == id;
+		var deferred = Q.defer();
+		FormModel.findById(id, function(err, result) {
+			deferred.resolve(result);
 		});
 		
-		return form != undefined ? form : null;
+		return deferred.promise;		
 	}
 	
-	// Number -> [Form]
+	// String -> Promise([Form])
 	function findByUserId(userId) {
-		var userForms = forms.filter(function(currentForm, index, array) {
-			return currentForm.userId == userId;
-		});
+		var deferred = Q.defer();
+		var conditions = {userId: userId};
+		FormModel.find(conditions, function(err, results) {
+			deferred.resolve(results);
+		})
 		
-		return userForms;
+		return deferred.promise;
 	}
 	
-	// String -> Form
+	// String -> Promise([Form])
 	function findFormByTitle(title) {
-		var form = forms.find(function(currentForm, index, array) {
-			return currentForm.title == title;
-		});
+		var deferred = Q.defer();
+		var conditions = {title: title};
+		FormModel.find(conditions, function(err, results) {
+			deferred.resolve(results);
+		})
 		
-		return form != undefined ? form : null;
+		return deferred.promise;
 	}
 	
-	// Number * Form -> [Form]
+	// String * Form -> Promise([Form])
 	function update(id, form) {
-		var index = forms.findIndex(function(currentForm, index, array) {
-			return currentForm.id == id;
+		var deferred = Q.defer();
+		var conditions = {_id: id};
+		var update = {$set: form};
+		FormModel.update(conditions, update, function(err, raw) {
+			deferred.resolve();
 		});
-		forms[index] = form;
+		var promise = deferred.promise.then(function() {
+			return findAll();
+		});
 		
-		return forms;
+		return promise;
 	}
 	
-	// Number * Number * Field -> Form
+	// String * String * Field -> Promise(Form)
 	function updateField(formId, fieldId, field) {
-		var formIndex = forms.findIndex(function(currentForm, index, array) {
-			return currentForm.id == formId;
-		});
-		var form = forms[formIndex];
-		var fieldIndex = form.fields.findIndex(function(currentField, index, array) {
-			return currentField.id == fieldId;
-		});
-		forms[formIndex][fieldIndex] = field;
+		var deferred = Q.defer();
 		
-		return form;
+		FormModel.findById(formId, function(err, retrievedForm) {
+			var fieldIndex = retrievedForm.fields.findIndex(function(field, index, array) {
+				return field._id == fieldId;
+			});
+			Object.assign(retrievedForm.fields[fieldIndex], field);
+			deferred.resolve(retrievedForm);
+		});
+		
+		var promise = deferred.promise
+			.then(function(retrievedForm) {
+				var deferred = Q.defer();
+				retrievedForm.save(function(err) {
+					deferred.resolve();
+				});
+				return deferred.promise;
+			})
+			.then(function() {
+				return findById(formId);
+			});
+			
+		return promise;
 	}
 	
-	// Number * Field -> [Field]
-	function insertField(formId, field) {
-		var index = forms.findIndex(function(currentForm, index, array) {
-			return currentForm.id == formId;
-		});
-		forms[index].fields.push(field);
-		
-		return forms[index].fields;
+	// String * Field -> Promise([Field])
+	function insertField(formId, field) {		
+		var promise = findById(formId)
+			.then(function(form) {
+				var deferred = Q.defer();
+				form.fields.push(field);
+				form.save(function(err) {
+					deferred.resolve(form.fields);
+				});
+				return deferred.promise;
+			});
+			
+		return promise;
 	}
 	
-	// Number -> [Form]
+	// String -> Promise([Form])
 	function remove(id) {
-		forms = forms.filter(function(currentForm, index, array) {
-			return currentForm.id != id;
+		var deferred = Q.defer();
+		var conditions = {_id: id};
+		FormModel.remove(conditions, function(err) {
+			findAll.then(function(forms) {
+				deferred.resolve(forms);
+			});
 		});
 		
-		return forms;
+		return deferred.promise;
 	}
 	
-	// Number * Number -> [Field]
+	// String * String -> Promise([Field])
 	function removeField(formId, fieldId) {
-		var formIndex = forms.findIndex(function(currentForm, index, array) {
-			return currentForm.id == formId;
-		});
-		var form = forms[formIndex];
-		form.fields = form.fields.filter(function(currentField, index, array) {
-			return currentField.id != fieldId;
-		});
+		var promise = findById(formId)
+			.then(function(form) {
+				var deferred = Q.defer()
+				var fields = form.fields.filter(function(field, index, array) {
+					return fieldId != field._id;
+				});
+				form.fields = fields;
+				form.save(function(err) {
+					deferred.resolve();
+				});
+				return deferred.promise;
+			})
+			.then(function() {
+				return findAll();
+			});
 		
-		return form.fields;
+		return promise;
 	}
 	
 	return api;

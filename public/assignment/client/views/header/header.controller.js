@@ -8,7 +8,7 @@
 		var model = this;
 		
 		var mainHeaderNavs = [{name: "Username", link: "#"},
-		 					  {name: "Logout", link: "#"}];
+		 					  {name: "Logout", link: "#/login"}];
 			
 		var loggedOutHeaderNavs = [{name: "Register", link: "#/register"},
 								   {name: "Login", link: "#/login"}]
