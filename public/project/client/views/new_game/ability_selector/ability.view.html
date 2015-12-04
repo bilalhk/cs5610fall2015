@@ -1,0 +1,35 @@
+<div class="container-fluid" ng-controller="AbilitySelectorController as abilitySelectorModel">
+	<div class="row">
+		
+		<!-- Available abilities -->
+		<table class="table-striped table-responsive table-bordered col-sm-5 col-md-4 col-lg-2">
+			<thead>
+				<tr>
+					<td class="text-center"><b>Add Abilities</b></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="ability in abilitySelectorModel.availableAbilities">
+					<td>{{ability.name}} <span class="glyphicon glyphicon-chevron-right" ng-click="abilitySelectorModel.addAbility($index)"></span></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<!-- Selected abilities -->
+		<table class="table-striped table-responsive table-bordered col-sm-5 col-md-4 col-lg-2">
+			<thead>
+				<tr>
+					<td class="text-center"><b>Selected Abilities</b></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="ability in abilitySelectorModel.character.abilities">
+					<td>{{ability.name}}</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<h4 class="col-sm-12 text-left">Wisdom Points: {{abilitySelectorModel.character.wisdomPoints}}</h4>
+	</div>
+</div>
+

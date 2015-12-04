@@ -1,0 +1,22 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-12">
+			<h2>Start New Game</h2>
+		</div>
+		
+		<!-- Searchbar -->
+		<div class="col-sm-12" ng-include="'views/character_searchbar/searchbar.view.html'"></div>
+		
+		<!-- Character card -->
+		<div class="col-sm-12 col-md-3" ng-include="'views/character_card/card.view.html'" ng-controller="CardController as cardModel"></div>
+		
+		<!-- Ability selector -->
+		<div class="col-sm-12 col-md-9" ng-include="'views/new_game/ability_selector/ability.view.html'"></div>
+		
+		<!-- Start game button -->
+		<div class="col-sm-4">
+			<button class="btn btn-default" ng-click="newGameModel.startNewGame()">Start Game</button>
+		</div>
+		
+	</div>	
+</div>

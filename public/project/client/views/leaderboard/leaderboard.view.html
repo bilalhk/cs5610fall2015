@@ -1,0 +1,21 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-12">
+			<h2>Leaderboard</h2>
+		</div>
+		
+		<!-- Leaderboard tabs -->
+		<div class="col-sm-12 col-md-8 col-lg-6">
+			<nav>
+				<ul class="nav nav-tabs">
+					<li role="presentation" ng-class="{active: leaderboardModel.$state.includes('leaderboard.users')}"><a ui-sref="leaderboard.users">Users</a></li>
+					<li role="presentation" ng-class="{active: leaderboardModel.$state.includes('leaderboard.characters')}"><a ui-sref="leaderboard.characters">Characters</a></li>
+				</ul>
+			</nav>
+		</div>
+		
+		<!-- Tab content -->
+		<div class="col-sm-12" ui-view></div>
+		
+	</div>
+</div>

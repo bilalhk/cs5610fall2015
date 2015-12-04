@@ -1,0 +1,34 @@
+<div class="container-fluid">
+	<div class="row">
+		
+		<!-- player -->
+		<div class="col-sm-12 col-md-5">
+			<div class="container-fluid">
+				<!-- Character card -->
+				<div class="row">
+					<div class="col-sm-12">
+						<div ui-view="thisPlayer"></div>
+					</div>
+				</div>
+				<!-- Drop down action -->
+				<div class="row">
+					<div class="col-sm-8">
+						<select ng-model="duelModel.selectedAbilityIndex">
+							<option ng-repeat="ability in duelModel.abilities" value="{{$index}}">{{ability.name}}</option>
+						</select>
+					</div>
+					<div class="col-sm-4">
+						<button class="btn btn-default" ng-click="duelModel.submitMove()">Submit Move</button>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<!-- Opponent -->
+		<div class="col-sm-12 col-md-5">
+			<div ui-view="otherPlayer"></div>
+		</div>
+		
+	</div>
+</div>
