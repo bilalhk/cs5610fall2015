@@ -3,11 +3,11 @@
 	
 	angular.module("YeOldArena").controller("AbilitySelectorController", abilitySelectorController);
 	
-	function abilitySelectorController($scope, abilityService) {
+	function abilitySelectorController($scope, characterService) {
 	
 		var model = this;
 		
-		abilityService.findAvailableAbilities().then(function(abilities) {
+		characterService.findAbilityDescriptions().then(function(abilities) {
 			model.availableAbilities = abilities;
 		})
 		
@@ -18,8 +18,11 @@
 		
 		model.addAbility = function(index) {
 			var selectedAbility = model.availableAbilities[index];
-			model.availableAbilities.splice(index, 1);
-			model.character.addAbility(selectedAbility);
+			characterService.addAbility(selectedAbility).then(function(response) {
+				model.character = response.character;
+				model.message = response.message;
+				model.availableAbilities.splice(index, 1);
+			});
 		}
 		
 	}

@@ -18,7 +18,9 @@
 				controllerAs: "loginModel"
 			})
 			.state("home.register", {
-				templateUrl: "views/home/register/register.view.html"
+				templateUrl: "views/home/register/register.view.html",
+				controller: "RegisterController",
+				controllerAs: "registerModel"
 			})
 			.state("profile", {
 				url: "/profile",

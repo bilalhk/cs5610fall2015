@@ -3,9 +3,11 @@
 	
 	angular.module("YeOldArena").controller("ProfileController", profileController);
 	
-	function profileController($rootScope) {
+	function profileController(userService) {
 		
-		this.user = $rootScope.user;
+		var model = this;
+		
+		model.user = userService.currentUser;
 	}
 	
 })();

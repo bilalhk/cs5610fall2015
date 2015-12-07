@@ -2,6 +2,8 @@ var Character = (function() {
 	"use strict"
 	
 	return class {
+		
+		// String * [Attribute] -> Character
 		constructor(name, attributes) {
 			this.name = name;
 			this.attributes = attributes;

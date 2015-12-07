@@ -3,9 +3,11 @@ var User = (function() {
 	
 	return class {
 		
-		constructor(username, role) {
+		// String * String * String -> User
+		constructor(username, password, email) {
 			this.username = username;
-			this.role = role;
+			this.password = password;
+			this.email = email;
 		}
 		
 	};

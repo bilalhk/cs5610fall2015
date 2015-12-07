@@ -3,6 +3,7 @@ var Attribute = (function() {
 	
 	return class {
 		
+		// String * Any -> Attribute
 		constructor(name, value) {
 			this.name = name;
 			this.value = value;

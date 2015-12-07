@@ -55,7 +55,7 @@
       <div class="row">
         
         <!-- Sidebar -->
-        <div class="col-sm-2 col-md-1 sidebar" ng-include="'views/sidebar/sidebar.view.html'" ng-controller="SidebarController as sidebarModel" ng-if="user"></div>
+        <div class="col-sm-2 col-md-1 sidebar" ng-include="'views/sidebar/sidebar.view.html'" ng-controller="SidebarController as sidebarModel" ng-if="loggedIn"></div>
         
         <!-- Main -->
         <div class="col-sm-10 col-md-11 col-sm-offset-2 col-md-offset-1 main" ui-view></div>

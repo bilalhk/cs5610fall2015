@@ -3,7 +3,10 @@
 	
 	angular.module("YeOldArena").controller("SidebarController", sidebarController);
 	
-	function sidebarController($rootScope, $location) {
+	function sidebarController($rootScope, $location, userService) {
+		
+		var model = this;
+		model.user = userService.currentUser;
 		
 		var clientSidebarNavs = [{name: "Profile", link: "#/profile"},
 								 {name: "Start Game", link: "#/new_game"},
@@ -12,13 +15,13 @@
 		var adminSidebarNavs = [{name: "Char. Gen.", link: "#/character_generation"},
 								{name: "Ability Gen.", link: "#/ability_generation"}];
 		
-		if ($rootScope.user.username == "admin") {
-			this.sidebarNavs = adminSidebarNavs;
+		if (model.currentUser == "admin") {
+			model.sidebarNavs = adminSidebarNavs;
 		} else {
-			this.sidebarNavs = clientSidebarNavs;
+			model.sidebarNavs = clientSidebarNavs;
 		}
 		
-		this.$location = $location;
+		model.$location = $location;
 	}
 	
 })();

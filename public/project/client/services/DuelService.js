@@ -36,9 +36,11 @@
 			return deferred.promise;
 		}
 		
-		// AbilityDescription -> Promise(World)
-		function submitMove(ability) {
-			
+		// AbilityDescription * FrontEndWorld -> Promise(FrontEndWorld)
+		function submitMove(ability, world) {
+			if (ability.verify(world.player)) {
+				// Hit DuelService endpoint on backend.
+			}
 		}
 		
 		return api;

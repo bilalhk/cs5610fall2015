@@ -1,38 +1,38 @@
-<div class="container-fluid bordered" ng-controller="RegisterController">
+<div class="container-fluid bordered">
 	<h2 class="text-center">Register</h2>
 
 	<form class="form-horizontal">
 		<div class="form-group">
 			<label for="registerUserName" class="col-sm-3 col-md-2 control-label label-align-left">Username</label>
 			<div class="col-sm-12 col-md-10">
-				<input type="text" class="form-control" id="registerUserName" placeholder="Username" ng-model="username">
+				<input type="text" class="form-control" id="registerUserName" placeholder="Username" ng-model="registerModel.username">
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="registerPassword" class="col-sm-3 col-md-2 control-label label-align-left">Password</label>
 			<div class="col-sm-12 col-md-10">
-				<input type="password" class="form-control" id="registerPassword" placeholder="Password" ng-model="password">
+				<input type="password" class="form-control" id="registerPassword" placeholder="Password" ng-model="registerModel.password">
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="registerVerifyPassword" class="col-sm-3 col-md-2 control-label label-align-left">Verify Password</label>
 			<div class="col-sm-12 col-md-10">
-				<input type="password" class="form-control" id="registerVerifyPassword" placeholder="Verify Password" ng-model="verifyPassword">
+				<input type="password" class="form-control" id="registerVerifyPassword" placeholder="Verify Password" ng-model="registerModel.verifyPassword">
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="registerEmail" class="col-sm-3 col-md-2 control-label label-align-left">Email</label>
 			<div class="col-sm-12 col-md-10">
-				<input type="email" class="form-control" id="registerEmail" placeholder="Email" ng-model="email">
+				<input type="email" class="form-control" id="registerEmail" placeholder="Email" ng-model="registerModel.email">
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<div class="col-sm-9 col-md-5 col-sm-offset-3 col-md-offset-2">
-				<button type="submit" class="btn btn-primary btn-block" ng-click="register()">Register</button>
+				<button type="submit" class="btn btn-primary btn-block" ng-click="registerModel.register()">Register</button>
 			</div>
 		</div>
 	</form>

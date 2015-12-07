@@ -3,13 +3,16 @@
 	
 	angular.module("YeOldArena").controller("HeaderController", headerController);
 	
-	function headerController($location) {
+	function headerController($location, $state, userService) {
 		
-		var headerNavs = [{name: "Username", link: "#/profile"},
-		 				  {name: "Logout", link: "#/login"}];	
-			
-		this.headerNavs = headerNavs;
-		this.$location = $location;
+		var model = this;
+		
+		model.logout = function() {
+			userService.logout().then(function() {
+				$state.go("home");
+			});
+		}
+		
 	}
 	
 })();

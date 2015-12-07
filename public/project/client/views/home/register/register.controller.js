@@ -1,12 +1,18 @@
 (function() {
 	"use strict"
 	
-	angular.module("YeOldArena").controller("RegisterController", function($scope, $rootScope, $state) {
+	angular.module("YeOldArena").controller("RegisterController", registerController);
+	
+	function registerController($state, userService) {
 		
-		$scope.register = function() {
-			$rootScope.user = {username: $scope.username};
-			$state.go("profile");
+		var model = this;
+		
+		model.register = function() {
+			var user = new User(model.username, model.password, model.email);
+			userService.register(user).then(function(user) {
+				$state.go("profile");
+			});
 		}
-	})
+	}
 	
 })();
