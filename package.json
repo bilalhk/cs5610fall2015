@@ -24,10 +24,17 @@
   },
   "dependencies": {
     "body-parser": "^1.14.1",
-    "express": "~3.4.4",
+    "collections": "^1.2.4",
+    "connect-timeout": "^1.7.0",
+    "cookie-parser": "^1.4.0",
+    "express": "^3.4.8",
+    "express-session": "^1.12.1",
     "guid": "0.0.12",
     "mongoose": "^4.2.8",
     "multer": "^1.1.0",
+    "node-inspector": "^0.12.5",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "q": "^1.4.1",
     "uuid": "^2.0.1"
   },

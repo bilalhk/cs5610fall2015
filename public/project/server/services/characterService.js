@@ -1,9 +1,9 @@
 var q = require("q");
 var http = require("http");
 var attributeGenerator = require("../data_definitions/attributeGenerator");
-var Character = require("../data_definitions/character.js");
+var Character = require("../data_definitions/character");
 
-module.exports = function(appServer, passport, auth, abilities, abilityDescriptions) {
+module.exports = function(appServer, passport, auth, abilities) {
 	
 	appServer.post("/rest/character", auth, function(req, res) {
 		var characterName = req.body.name;
@@ -25,20 +25,40 @@ module.exports = function(appServer, passport, auth, abilities, abilityDescripti
 	});
 	
 	appServer.get("/rest/ability", auth, function(req, res) {
-		res.json(abilityDescriptions);
+		res.json(abilities);
 	})
 	
 	appServer.post("/rest/character/ability", auth, function(req, res) {
 		var abilityName = req.body.name;
 		var character = req.session.character;
-		var ability = abilities.find(function(ability, index, array) {
+		var abilityIndex = abilities.findIndex(function(ability, index, array) {
 			return abilityName == ability.name;
 		});
-		if (ability.verify(character)) {
-			character.addAbility(ability);
-			res.json(200);
+		var ability = abilities[abilityIndex];
+		if (character.attributes.wisdom >= ability.wisdomCost) {
+			character.abilities.push(ability);
+			character.attributes.wisdom = character.attributes.wisdom - ability.wisdomCost;
+			var message = "";
+			res.json({message: message, character: character});
 		} else {
-			res.json(400);
+			var message = "Insufficient Wisdom Points";
+			res.json({message: message, character: character});
+		}
+	})
+	
+	appServer.delete("/rest/character/ability/:name", auth, function(req, res) {
+		var name = req.params.name;
+		var character = req.session.character;
+		var abilityIndex = abilities.findIndex(function(ability, index, array) {
+			return name == ability.name;
+		});
+		if (abilityIndex != -1) {
+			var ability = abilities[abilityIndex];
+			character.abilities.splice(abilityIndex, 1);
+			character.attributes.wisdom = character.attributes.wisdom + ability.wisdomCost;
+			res.json(character); 
+		} else {
+			res.send(400);
 		}
 	})
 	

@@ -25,6 +25,14 @@
 			});
 		}
 		
+		model.removeAbility = function(index) {
+			var selectedAbility = model.character.abilities[index];
+			characterService.removeAbility(selectedAbility).then(function(character) {
+				model.character = character;
+				model.availableAbilities.push(selectedAbility);
+			});
+		}
+		
 	}
 	
 })();

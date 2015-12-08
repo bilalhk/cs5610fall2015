@@ -3,9 +3,10 @@
 	
 	angular.module("YeOldArena").controller("OpponentCharacterController", opponentCharacterController);
 	
-	function opponentCharacterController($stateParams) {
+	function opponentCharacterController($stateParams, duelService) {
+		
 		var model = this;
-		model.character = $stateParams.world.opponent;
+		model.character = duelService.getCurrentWorld().opponent;
 	}
 	
 })()

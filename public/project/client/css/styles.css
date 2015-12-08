@@ -1,3 +1,8 @@
 .bordered {
 	border: 2px solid beige;
 }
+
+.loading_icon {
+	width: 106px;
+	height: 106px;
+}

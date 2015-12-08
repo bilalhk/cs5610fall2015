@@ -16,9 +16,7 @@
 		})
 		
 		this.startNewGame = function() {
-			duelService.startNewDuel(model.character).then(function(world) {
-				$state.go("duel", {world: world});
-			})
+			$state.go("duelQueue");
 		}
 	}
 	

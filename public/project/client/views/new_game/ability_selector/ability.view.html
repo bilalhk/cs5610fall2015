@@ -24,12 +24,12 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="ability in abilitySelectorModel.character.abilities">
-					<td>{{ability.name}}</td>
+					<td>{{ability.name}} <span class="glyphicon glyphicon-chevron-left" ng-click="abilitySelectorModel.removeAbility($index)"></span></td>
 				</tr>
 			</tbody>
 		</table>
 		
-		<h4 class="col-sm-12 text-left">Wisdom Points: {{abilitySelectorModel.character.wisdomPoints}}</h4>
+		<h4 class="col-sm-12 text-left">Wisdom Points: {{abilitySelectorModel.character.attributes.wisdom}}</h4>
 	</div>
 </div>
 

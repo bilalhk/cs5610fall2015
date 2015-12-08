@@ -76,6 +76,11 @@
 			.state("register", {
 				templateUrl: "views/register/register.view.html"
 			})
+			.state("duelQueue", {
+				templateUrl: "views/duelQueue/duelQueue.view.html",
+				controller: "DuelQueueController",
+				controllerAs: "duelQueueModel"
+			})
 			.state("characterGeneration", {
 				url: "/character_generation",
 				templateUrl: "views/character_generation/character_gen.view.html",

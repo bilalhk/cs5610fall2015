@@ -8,14 +8,4 @@ module.exports = class {
 		this.abilities = [];
 	}
 	
-	addAbility(ability) {
-		this.abilities.push(ability)
-	}
-	
-	removeAbilityByName(abilityName) {
-		this.abilities.filter(function(ability, index, array) {
-			return ability.name != abilityName;
-		})
-	}
-	
 }

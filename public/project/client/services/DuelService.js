@@ -3,44 +3,73 @@
 	
 	angular.module("YeOldArena").factory("duelService", duelService);
 	
-	function duelService($q) {
+	function duelService($q, $http) {
 		var api = {
-			startNewDuel: startNewDuel,
-			submitMove: submitMove
+			addToQueue: addToQueue,
+			quitQueue: quitQueue,
+			findMatch: findMatch,
+			submitMove: submitMove,
+			updateWorld: updateWorld,
+			getCurrentWorld: getCurrentWorld
 		};
 		
-		// Character -> Promise(World)
-		function startNewDuel(character) {
+		var currentWorld;
+		
+		// -> Promise()
+		function addToQueue() {
 			var deferred = $q.defer();
-			var player = new Character("Jesus", [
-				new Attribute("HP", 85),
-				new Attribute("Speed", 40),
-				new Attribute("Mana", 84),
-				new Attribute("Attack", 54),
-				new Attribute("Defence", 89)
-				]);
-			player.addAbility(new AbilityDescription("A1", "D1", function() {}));
-			player.addAbility(new AbilityDescription("A2", "D2", function() {}));
-			var frontEndWorld = new FrontEndWorld(
-				player,
-				new Character("Goliath", [
-				new Attribute("HP", 24),
-				new Attribute("Speed", 44),
-				new Attribute("Mana", 99),
-				new Attribute("Attack", 24),
-				new Attribute("Defence", 98)
-				]));
-			frontEndWorld.setPlayerTurn(true);
-			deferred.resolve(frontEndWorld);
+			$http.post("/rest/duel").then(function() {
+				console.log("called add to queue");
+				deferred.resolve();
+			})
 			
 			return deferred.promise;
 		}
 		
-		// AbilityDescription * FrontEndWorld -> Promise(FrontEndWorld)
-		function submitMove(ability, world) {
-			if (ability.verify(world.player)) {
-				// Hit DuelService endpoint on backend.
-			}
+		function quitQueue() {
+			var deferred = $q.defer();
+			$http.delete("/rest/duel/").then(function() {
+				deferred.resolve();
+			});
+			
+			return deferred.promise;
+		}
+		
+		// -> Promise()
+		function findMatch() {
+			var deferred = $q.defer();
+			$http.get("/rest/duel").then(function(response) {
+				currentWorld = response.data;
+				console.log(currentWorld);
+				deferred.resolve();
+			});
+			
+			return deferred.promise;
+		}
+		
+		// String -> Promise()
+		function submitMove(abilityName) {
+			var deferred = $q.defer();
+			var url = "/rest/duel/ability" + abilityName;
+			$http.post(url).then(function success(response) {
+				currentWorld = response.data;
+				deferred.resolve();
+			}, function error(response) {
+				deferred.resolve(response.data);
+			});
+			
+			return deferred.promise;
+		}
+		
+		// -> Promise()
+		function updateWorld() {
+			var deferred = $q.defer();
+			$http.get("/rest/duel")
+		}
+		
+		// -> FrontEndWorld
+		function getCurrentWorld() {
+			return currentWorld
 		}
 		
 		return api;

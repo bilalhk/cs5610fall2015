@@ -8,7 +8,8 @@
 		var api = {
 			createCharacter: createCharacter,
 			findAbilityDescriptions: findAbilityDescriptions,
-			addAbility: addAbility
+			addAbility: addAbility,
+			removeAbility: removeAbility
 		};
 		
 		// String -> Promise(Character)
@@ -23,7 +24,7 @@
 			return deferred.promise;
 		}
 		
-		// -> Promise([AbilityDescription])
+		// -> Promise([Ability])
 		function findAbilityDescriptions() {
 			var deferred = $q.defer();
 			$http.get("/rest/ability").then(function(response) {
@@ -34,13 +35,22 @@
 			return deferred.promise;
 		}
 		
-		// AbilityDescription -> Promise({message: String, character: Chararcter})
-		function addAbility(abilityDescription) {
+		// Ability -> Promise({message: String, character: Chararcter})
+		function addAbility(ability) {
 			var deferred = $q.defer();
-			$http.post("/rest/character/ability", abilityDescription).then(function(response) {
-				var character = response.data.character;
-				var message = response.data.message;
-				deferred.resolve({message: message, character: character});
+			$http.post("/rest/character/ability", ability).then(function(response) {
+				deferred.resolve(response.data);
+			});
+			
+			return deferred.promise;
+		}
+		
+		// Ability -> Promise(Character)
+		function removeAbility(ability) {
+			var deferred = $q.defer();
+			var url = "/rest/character/ability/" + ability.name;
+			$http.delete(url).then(function(response) {
+				deferred.resolve(response.data);
 			});
 			
 			return deferred.promise;

@@ -7,6 +7,7 @@ module.exports = class {
 		this.character = character;
 		this.user = user;
 		this.turnMeter = 100;
+		this.isPlayerTurn = false;
 	}
 	
 }

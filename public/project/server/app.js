@@ -2,11 +2,10 @@ var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var cookieParser = require("cookie-parser");
 var session = require("express-session");
-var Deque = require("collections/deque");
-var Map = require("collections/map");
-var MatchmakingService = require("./services/matchmakingService");
+var timeout = require("connect-timeout");
 var UserService = require("./services/userService");
 var CharacterService = require("./services/characterService");
+var DuelService = require("./services/duelService");
 var userModel = require("./models/userModel");
 var abilityModel = require("./models/abilityModel");
 
@@ -17,6 +16,8 @@ module.exports = function(appServer, mongoose) {
 	appServer.use(cookieParser());
 	appServer.use(passport.initialize());
 	appServer.use(passport.session());
+	//appServer.use(timeout(20000));
+	//appServer.use(haltOnTimedout);
 	
 	// Initialize Models.
 	var UserModel = userModel(mongoose);
@@ -61,25 +62,35 @@ module.exports = function(appServer, mongoose) {
 		}
 	}
 	
-	// Set up queue for matchmaking.
-	var unmatchedPlayers = new Deque();
+	// Queue for matchmaking.
+	var playerQueue = [];
+	
+	// Set of players already in queue.
+	var playerSet = {};
 	
 	// Set up map of duel sessions.
-	var activeDuels = new Map();
+	var activeDuels = {};
 	
 	// Retrieve abilities from database.
 	var abilities = [];
-	var abilityDescriptions = [];
-	AbilityModel.find({}, function(err, docs) {
+	AbilityModel.find({}, function(err, docs) {		
 		docs.forEach(function(ability, index) {
-			abilities.push(ability);
-			abilityDescriptions.push({name: ability.name, description: ability.description});
+			var visit = eval(ability.visit);
+			var evaledAbility = {name: ability.name, wisdomCost: ability.wisdomCost, description: ability.description, visit: visit};
+			abilities.push(evaledAbility);
 		});
 	});
 	
 	// Initialize services.
 	UserService(appServer, UserModel, passport, auth);
-	CharacterService(appServer, passport, auth, abilities, abilityDescriptions);
+	CharacterService(appServer, passport, auth, abilities);
+	DuelService(appServer, auth, playerQueue, playerSet, activeDuels);
 	//MatchmakingService(appServer, unmatchedPlayers, activeDuels);
 	
+	
+	function haltOnTimedout(req, res, next) {
+		if (!req.timedout) {
+			next();
+		}
+	}
 }

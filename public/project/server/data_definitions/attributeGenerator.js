@@ -42,8 +42,8 @@ module.exports = function(characterBioJSON) {
 	}
 	
 	var generateSpeed = function() {
-		var idealHeightDiff = Math.abs(idealHeightForSpeed - height);
-		var speed = Math.round(100 - idealHeightDiff * random(.6, 1.4));
+		var idealHeightDiff = Math.abs(idealHeightForSpeed - 1.4);
+		var speed = Math.round(100 - random(1,50));
 		
 		return Math.max(speed, 10);
 	}

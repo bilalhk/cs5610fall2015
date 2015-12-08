@@ -3,11 +3,10 @@
 	
 	angular.module("YeOldArena").controller("PlayerCharacterController", playerCharacterController);
 	
-	function playerCharacterController($stateParams) {
-		var model = this;
-		var world = $stateParams.world;
+	function playerCharacterController($stateParams, duelService) {
 		
-		model.character = world.player;
+		var model = this;
+		model.character = duelService.getCurrentWorld().player;
 	}
 	
 })()
