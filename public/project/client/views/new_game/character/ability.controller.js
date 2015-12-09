@@ -3,17 +3,18 @@
 	
 	angular.module("YeOldArena").controller("AbilitySelectorController", abilitySelectorController);
 	
-	function abilitySelectorController($scope, characterService) {
+	function abilitySelectorController($scope, characterService, abilityService) {
 	
+		console.log("Inside controller");
 		var model = this;
 		
-		characterService.findAbilityDescriptions().then(function(abilities) {
-			model.availableAbilities = abilities;
+		$scope.$on("characterGeneration", function(event, character) {
+			console.log(character);
+			model.character = character;
 		})
 		
-		$scope.$on("characterGeneration", function(event, character) {
-			event.preventDefault();
-			model.character = character;
+		abilityService.findAbilities().then(function(abilities) {
+			model.availableAbilities = abilities;
 		})
 		
 		model.addAbility = function(index) {

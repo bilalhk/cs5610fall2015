@@ -1,22 +1,28 @@
 <div class="container-fluid">
 	<div class="row">
+		
 		<div class="col-sm-12">
 			<h2>Start New Game</h2>
 		</div>
 		
 		<!-- Searchbar -->
-		<div class="col-sm-12" ng-include="'views/character_searchbar/searchbar.view.html'"></div>
+		<div class="col-sm-12">
+			<form class="form-inline">
 		
-		<!-- Character card -->
-		<div class="col-sm-12 col-md-3" ng-include="'views/character_card/card.view.html'" ng-controller="CardController as cardModel"></div>
+				<div class="form-group">
+					<label for="inputHistoricalFigure">Name Of Celebrity</label>
+					<input type="text" class="form-control" id="inputHistoricalFigure" placeholder="Name" ng-model="newGameModel.celebrityName">
+				</div>
 		
-		<!-- Ability selector -->
-		<div class="col-sm-12 col-md-9" ng-include="'views/new_game/ability_selector/ability.view.html'"></div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary" ng-click="newGameModel.createCharacter()">Create Character</button>
+				</div>
 		
-		<!-- Start game button -->
-		<div class="col-sm-4">
-			<button class="btn btn-default" ng-click="newGameModel.startNewGame()">Start Game</button>
+			</form>
 		</div>
+		
+		<!-- Character card and ability selector -->
+		<div class="col-sm-12" ui-view></div>
 		
 	</div>	
 </div>

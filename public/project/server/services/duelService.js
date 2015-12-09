@@ -3,9 +3,9 @@ var World = require("../data_definitions/world");
 var FrontEndWorld = require("../data_definitions/frontEndWorld");
 var strEq = require("../util/stringEquality");
 
-module.exports = function(appServer, auth, playerQueue, playerSet, activeDuels, abilities) {
+module.exports = function(appServer, authClient, playerQueue, playerSet, activeDuels, abilities, UserModel) {
 	
-	appServer.post("/rest/duel", auth, function(req, res) {
+	appServer.post("/rest/duel", authClient, function(req, res) {
 		if (playerSet[req.user._id]) {
 			res.send(400);
 		} else {
@@ -16,7 +16,7 @@ module.exports = function(appServer, auth, playerQueue, playerSet, activeDuels, 
 		}
 	})
 	
-	appServer.get("/rest/queue/duel", auth, function(req, res) {
+	appServer.get("/rest/queue/duel", authClient, function(req, res) {
 		if (activeDuels[req.user._id]) {
 			var world = activeDuels[req.user._id];
 			var frontEndWorld = createFrontEndWorld(world, req.user);
@@ -42,7 +42,7 @@ module.exports = function(appServer, auth, playerQueue, playerSet, activeDuels, 
 		}
 	})
 	
-	appServer.post("/rest/duel/ability/:name", auth, function(req, res) {
+	appServer.post("/rest/duel/ability/:name", authClient, function(req, res) {
 		var abilityName = req.params.name;
 		var world = activeDuels[req.user._id];
 		if (gameOver(world)) {
@@ -61,7 +61,7 @@ module.exports = function(appServer, auth, playerQueue, playerSet, activeDuels, 
 		}
 	})
 	
-	appServer.get("/rest/duel", auth, function(req, res) {
+	appServer.get("/rest/duel", authClient, function(req, res) {
 		var world = activeDuels[req.user._id];
 		if (gameOver(world)) {
 			delete activeDuels[req.user._id];
@@ -70,7 +70,7 @@ module.exports = function(appServer, auth, playerQueue, playerSet, activeDuels, 
 		res.json(frontEndWorld);
 	})
 	
-	appServer.delete("/rest/duel", auth, function(req, res) {
+	appServer.delete("/rest/duel", authClient, function(req, res) {
 		res.send(200);
 	})
 	
@@ -81,8 +81,25 @@ module.exports = function(appServer, auth, playerQueue, playerSet, activeDuels, 
 	function cleanUp(world, user) {
 		var winner = world.player1.character.attributes.hp <= 0 ? world.player2.user : world.player1.user;
 		var loser = world.player1.character.attributes.hp <= 0 ? world.player1.user : world.player2.user;
-		//updateStats(winner, loser);
+		updateStats(winner, loser);
 		delete activeDuels[user._id];
+	}
+	
+	function updateStats(winner, loser) {
+		if (winner.roles[0] != "guest") {
+			UserModel.update({_id: winner._id}, {$inc: {wins: 1}}, function(err, numAffected) {
+				if (err) {
+					console.log(err);
+				}
+			})
+		}
+		if (loser.roles[0] != "guest") {
+			UserModel.update({_id: loser._id}, {$inc: {losses: 1}}, function(err, numAffected) {
+				if (err) {
+					console.log(err);
+				}
+			})
+		}
 	}
 	
 	var createFrontEndWorld = function(world, user) {
@@ -102,5 +119,5 @@ module.exports = function(appServer, auth, playerQueue, playerSet, activeDuels, 
 		frontEndWorld.isPlayerTurn = isPlayerTurn;
 		
 		return frontEndWorld;
-	}	
+	}
 }	

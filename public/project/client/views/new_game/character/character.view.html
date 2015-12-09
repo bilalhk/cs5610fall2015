@@ -1,0 +1,46 @@
+<div class="container-fluid">
+	<div class="row">
+		
+		<!-- Character card -->
+		<div class="col-sm-12 col-md-3">
+			<div ng-include="'views/character_card/card.view.html'" ng-controller="CardController as cardModel"></div>
+		</div>
+		
+		<!-- Ability Selector -->
+		<div class="col-sm-12 col-md-9" ng-controller="AbilitySelectorController as abilitySelectorModel">
+			
+			<!-- Available abilities -->
+			<table class="table-striped table-responsive table-bordered col-sm-5 col-md-4 col-lg-2">
+				<thead>
+					<tr>
+						<td class="text-center"><b>Add Abilities</b></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="ability in abilitySelectorModel.availableAbilities">
+						<td>{{ability.name}} <span class="glyphicon glyphicon-chevron-right" ng-click="abilitySelectorModel.addAbility($index)"></span></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<!-- Selected abilities -->
+			<table class="table-striped table-responsive table-bordered col-sm-5 col-md-4 col-lg-2">
+				<thead>
+					<tr>
+						<td class="text-center"><b>Selected Abilities</b></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="ability in abilitySelectorModel.character.abilities">
+						<td>{{ability.name}} <span class="glyphicon glyphicon-chevron-left" ng-click="abilitySelectorModel.removeAbility($index)"></span></td>
+					</tr>
+				</tbody>
+			</table>
+		
+			<h4 class="col-sm-12 text-left">Wisdom Points: {{abilitySelectorModel.character.attributes.wisdom}}</h4>
+			
+		</div>
+		
+	</div>
+</div>
+

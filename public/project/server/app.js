@@ -6,6 +6,7 @@ var timeout = require("connect-timeout");
 var UserService = require("./services/userService");
 var CharacterService = require("./services/characterService");
 var DuelService = require("./services/duelService");
+var AbilityService = require("./services/abilityService");
 var userModel = require("./models/userModel");
 var abilityModel = require("./models/abilityModel");
 
@@ -54,12 +55,20 @@ module.exports = function(appServer, mongoose) {
 		});
 	})
 	
-	function auth(req, res, next) {
-		if (!req.isAuthenticated()) {
-			res.send(401);
-		} else {
-			next();
-		}
+	function authClient(req, res, next) {
+		var index = req.user.roles.findIndex(function(role, index, array) {
+			return role == "admin" || role == "client" || role == "guest";
+		})
+		
+		index == -1 ? res.send(401) : next();
+	}
+	
+	function authAdmin(req, res, next) {
+		var index = req.user.roles.findIndex(function(role, index, array) {
+			return role == "admin";
+		})
+		
+		index == -1 ? res.send(401) : next();
 	}
 	
 	// Queue for matchmaking.
@@ -68,7 +77,7 @@ module.exports = function(appServer, mongoose) {
 	// Set of players already in queue.
 	var playerSet = {};
 	
-	// Set up map of duel sessions.
+	// Mmap of duel sessions.
 	var activeDuels = {};
 	
 	// Retrieve abilities from database.
@@ -82,11 +91,10 @@ module.exports = function(appServer, mongoose) {
 	});
 	
 	// Initialize services.
-	UserService(appServer, UserModel, passport, auth);
-	CharacterService(appServer, passport, auth, abilities);
-	DuelService(appServer, auth, playerQueue, playerSet, activeDuels, abilities);
-	//MatchmakingService(appServer, unmatchedPlayers, activeDuels);
-	
+	UserService(appServer, UserModel, passport, authClient, authAdmin);
+	CharacterService(appServer, passport, authClient, abilities);
+	DuelService(appServer, authClient, playerQueue, playerSet, activeDuels, abilities, UserModel);
+	AbilityService(appServer, authClient, authAdmin, abilities, AbilityModel);
 	
 	function haltOnTimedout(req, res, next) {
 		if (!req.timedout) {

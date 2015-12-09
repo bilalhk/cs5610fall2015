@@ -1,4 +1,4 @@
-module.exports = function(appServer, UserModel, passport, auth) {
+module.exports = function(appServer, UserModel, passport, authClient, authAdmin) {
 	
 	appServer.post("/login", passport.authenticate("local"), function(req, res) {
 		var user = req.user;
@@ -10,9 +10,40 @@ module.exports = function(appServer, UserModel, passport, auth) {
 		res.json(user);
 	})
 	
-	appServer.post("/logout", auth, function(req, res) {
+	appServer.get("/loggedIn/client", authClient, function(req, res) {
+		var index = req.user.roles.findIndex(function(role, index, array) {
+			return role == "client";
+		})
+		
+		index == -1 ? res.json(false) : res.json(true);
+	})
+	
+	appServer.get("/loggedIn/admin", authAdmin, function(req, res) {
+		var index = req.user.roles.findIndex(function(role, index, array) {
+			return role == "admin";
+		})
+		
+		index == -1 ? res.json(false) : res.json(true);
+	})
+	
+	appServer.post("/logout", authClient, function(req, res) {
+		if (req.user.roles[0] == "guest") {
+			UserModel.remove({_id: req.user._id}, function(err) {
+				if (err) console.log(err);
+			})
+		}		
 		req.logout();
 		res.json(null);
+	})
+	
+	appServer.get("/rest/user/stats", authClient, function(req, res) {
+		UserModel.find({roles: {$ne: "guest"}})
+			.limit(20)
+			.sort({wins: -1})
+			.select({username: 1, wins: 1, losses: 1})
+			.exec(function(err, docs) {
+				res.json(docs);
+			})
 	})
 	
 	appServer.post("/register", function(req, res) {

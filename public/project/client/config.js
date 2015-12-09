@@ -34,6 +34,9 @@
 				controller: "NewGameController",
 				controllerAs: "newGameModel"
 			})
+			.state("new_game.character", {
+				templateUrl: "views/new_game/character/character.view.html"
+			})
 			.state("duel", {
 				url: "/duel",
 				templateUrl: "views/duel/duel.view.html",
@@ -81,18 +84,20 @@
 				controller: "DuelQueueController",
 				controllerAs: "duelQueueModel"
 			})
-			.state("characterGeneration", {
-				url: "/character_generation",
-				templateUrl: "views/character_generation/character_gen.view.html",
-				controller: "CharacterGenerationController",
-				controllerAs: "characterGenerationModel"
-			})
 			.state("abilityGeneration", {
 				url: "/ability_generation",
 				templateUrl: "views/ability_generation/ability_gen.view.html",
 				controller: "AbilityGenerationController",
-				controllerAs: "abilityGenerationModel"
+				controllerAs: "abilityGenerationModel",
+				resolve: {
+					adminAuth: adminAuth
+				}
 			});
+			
+		function adminAuth(userService) {
+			return userService.adminAuth();
+		}
+		
 	});
 	
 })();

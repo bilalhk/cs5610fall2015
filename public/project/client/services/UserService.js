@@ -10,6 +10,8 @@
 			guestLogin: guestLogin,
 			logout: logout,
 			register: register,
+			adminAuth: adminAuth,
+			getUserStats: getUserStats,
 			getCurrentUser: getCurrentUser
 		};
 		
@@ -65,6 +67,26 @@
 				$rootScope.loggedIn = true;
 				deferred.resolve(currentUser);
 			});
+			
+			return deferred.promise;
+		}
+		
+		// -> Promise([Stats])
+		function getUserStats() {
+			var deferred = $q.defer();
+			$http.get("/rest/user/stats").then(function(response) {
+				deferred.resolve(response.data);
+			})
+			
+			return deferred.promise;
+		}
+		
+		// -> Promise()
+		function adminAuth() {
+			var deferred = $q.defer();
+			$http.get("/loggedIn/admin").then(function(response) {
+				response.data ? deferred.resolve() : deferred.reject();
+			})
 			
 			return deferred.promise;
 		}

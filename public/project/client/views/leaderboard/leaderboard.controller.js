@@ -5,9 +5,9 @@
 	
 	function leaderboardController($state) {
 		
+		var model = this;
+		model.$state = $state;
 		$state.go("leaderboard.users");
-		
-		this.$state = $state;
 	}
 	
 })();

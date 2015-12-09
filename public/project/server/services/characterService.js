@@ -35,10 +35,6 @@ module.exports = function(appServer, passport, auth, abilities) {
 		}).end();
 	});
 	
-	appServer.get("/rest/ability", auth, function(req, res) {
-		res.json(abilities);
-	})
-	
 	appServer.post("/rest/character/ability", auth, function(req, res) {
 		var abilityName = req.body.name;
 		var character = req.session.character;

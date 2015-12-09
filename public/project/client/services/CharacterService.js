@@ -7,30 +7,20 @@
 		
 		var api = {
 			createCharacter: createCharacter,
-			findAbilityDescriptions: findAbilityDescriptions,
 			addAbility: addAbility,
 			removeAbility: removeAbility
 		};
+		
+		var currentCharacter;
 		
 		// String -> Promise(Character)
 		function createCharacter(name) {
 			var deferred = $q.defer();
 			var characterObject = {name: name};
 			$http.post("/rest/character", characterObject).then(function(response) {
-				var character = response.data;
-				deferred.resolve(character);
+				currentCharacter = response.data;
+				deferred.resolve(response.data);
 			});
-			
-			return deferred.promise;
-		}
-		
-		// -> Promise([Ability])
-		function findAbilityDescriptions() {
-			var deferred = $q.defer();
-			$http.get("/rest/ability").then(function(response) {
-				var abilityDescriptions = response.data;
-				deferred.resolve(abilityDescriptions);
-			})
 			
 			return deferred.promise;
 		}
