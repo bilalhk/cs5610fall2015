@@ -1,3 +1,4 @@
+var random = require("../util/random");
 var now = new Date();
 var idealAgeForStr = 35;
 var idealAgeForHp = 25;
@@ -11,10 +12,6 @@ module.exports = function(characterBioJSON) {
 	var gender = characterBioJSON.actorActress == "Actor" ? "M" : "F";
 	var starSign = characterBioJSON.starSign;
 	var height = parseFloat(characterBioJSON.height.match(/\d\.\d/)[0]);	
-	
-	var random = function(low, high) {
-		return Math.random() * (high - low) + low;
-	}
 	
 	var generateStrength = function() {
 		var idealAgeDiff = Math.abs(idealAgeForStr - (now.getFullYear() - dob.getFullYear()));

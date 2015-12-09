@@ -2,6 +2,7 @@ var q = require("q");
 var http = require("http");
 var attributeGenerator = require("../data_definitions/attributeGenerator");
 var Character = require("../data_definitions/character");
+var random = require("../util/random");
 
 module.exports = function(appServer, passport, auth, abilities) {
 	
@@ -10,14 +11,24 @@ module.exports = function(appServer, passport, auth, abilities) {
 		var options = createOptions(characterName);
 		http.request(options, function(response) {
 			var rawString = "";
-			var characterBioJSON;
+			var name;
 			response.on("data", function(chunk) {
 				rawString += chunk;
 			});
 			response.on("end", function() {
-				characterBioJSON = JSON.parse(rawString)[0];
-				var attributes = attributeGenerator(characterBioJSON);
-				var character = new Character(characterBioJSON.name, attributes);
+				var attributes = {};
+				if (rawString == "") {
+					attributes = generateRandomAttributes();
+					name = "Random";
+				} else {
+					var characterBioJSON = JSON.parse(rawString)[0];
+					attributes = attributeGenerator(characterBioJSON);
+					name = characterBioJSON.name;
+				}
+				var character = new Character(name, attributes);
+				character.abilities.push(abilities.find(function(ability, index, array) {
+					return ability.name == "Basic Attack";
+				}))
 				req.session.character = character;
 				res.json(character);
 			})
@@ -68,6 +79,17 @@ module.exports = function(appServer, passport, auth, abilities) {
 		var path = "/imdb?name="+escapedName+"&format=JSON&filmography=0&limit=1&lang=en-us&exactFilter=0&bornDied=0&starSign=1&uniqueName=0&actorActress=1&actorTrivia=0&actorPhotos=N&actorVideos=N&salary=0&spouses=0&tradeMark=0&personalQuotes=0&starMeter=0";
 		var options = {host: host, path: path};
 		return options; 
+	}
+	
+	function generateRandomAttributes() {
+		return {
+			strength: Math.round(100 - random(10,80)),
+			hp: Math.round(100 - random(10,80)),
+			wisdom: Math.round(100 - random(10,80)),
+			speed: Math.round(100 - random(10,80)),
+			defence: Math.round(100 - random(10,80)),
+			mana: Math.round(100 - random(10,80))
+		};
 	}
 	
 }

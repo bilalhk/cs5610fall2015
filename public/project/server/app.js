@@ -84,7 +84,7 @@ module.exports = function(appServer, mongoose) {
 	// Initialize services.
 	UserService(appServer, UserModel, passport, auth);
 	CharacterService(appServer, passport, auth, abilities);
-	DuelService(appServer, auth, playerQueue, playerSet, activeDuels);
+	DuelService(appServer, auth, playerQueue, playerSet, activeDuels, abilities);
 	//MatchmakingService(appServer, unmatchedPlayers, activeDuels);
 	
 	

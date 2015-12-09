@@ -8,8 +8,8 @@
 			addToQueue: addToQueue,
 			quitQueue: quitQueue,
 			findMatch: findMatch,
+			getDuel: getDuel,
 			submitMove: submitMove,
-			updateWorld: updateWorld,
 			getCurrentWorld: getCurrentWorld
 		};
 		
@@ -38,7 +38,7 @@
 		// -> Promise()
 		function findMatch() {
 			var deferred = $q.defer();
-			$http.get("/rest/duel").then(function(response) {
+			$http.get("/rest/queue/duel").then(function(response) {
 				currentWorld = response.data;
 				console.log(currentWorld);
 				deferred.resolve();
@@ -47,10 +47,21 @@
 			return deferred.promise;
 		}
 		
+		// -> Promise()
+		function getDuel() {
+			var deferred = $q.defer();
+			$http.get("/rest/duel").then(function(response) {
+				currentWorld = response.data;
+				deferred.resolve();
+			})
+			
+			return deferred.promise;
+		}
+		
 		// String -> Promise()
 		function submitMove(abilityName) {
 			var deferred = $q.defer();
-			var url = "/rest/duel/ability" + abilityName;
+			var url = "/rest/duel/ability/" + abilityName;
 			$http.post(url).then(function success(response) {
 				currentWorld = response.data;
 				deferred.resolve();
@@ -59,12 +70,6 @@
 			});
 			
 			return deferred.promise;
-		}
-		
-		// -> Promise()
-		function updateWorld() {
-			var deferred = $q.defer();
-			$http.get("/rest/duel")
 		}
 		
 		// -> FrontEndWorld

@@ -3,7 +3,7 @@ var World = require("../data_definitions/world");
 var FrontEndWorld = require("../data_definitions/frontEndWorld");
 var strEq = require("../util/stringEquality");
 
-module.exports = function(appServer, auth, playerQueue, playerSet, activeDuels) {
+module.exports = function(appServer, auth, playerQueue, playerSet, activeDuels, abilities) {
 	
 	appServer.post("/rest/duel", auth, function(req, res) {
 		if (playerSet[req.user._id]) {
@@ -16,7 +16,7 @@ module.exports = function(appServer, auth, playerQueue, playerSet, activeDuels) 
 		}
 	})
 	
-	appServer.get("/rest/duel", auth, function(req, res) {
+	appServer.get("/rest/queue/duel", auth, function(req, res) {
 		if (activeDuels[req.user._id]) {
 			var world = activeDuels[req.user._id];
 			var frontEndWorld = createFrontEndWorld(world, req.user);
@@ -42,9 +42,48 @@ module.exports = function(appServer, auth, playerQueue, playerSet, activeDuels) 
 		}
 	})
 	
+	appServer.post("/rest/duel/ability/:name", auth, function(req, res) {
+		var abilityName = req.params.name;
+		var world = activeDuels[req.user._id];
+		if (gameOver(world)) {
+			res.status(400).send("The game has ended");
+		} else {
+			var ability = abilities.find(function(ability, index, array) {
+				return ability.name === abilityName;
+			})
+			world.accept(ability);
+			world.next();
+			if (gameOver(world)) {
+				cleanUp(world, req.user);
+			}
+			var frontEndWorld = createFrontEndWorld(world, req.user);
+			res.json(frontEndWorld);
+		}
+	})
+	
+	appServer.get("/rest/duel", auth, function(req, res) {
+		var world = activeDuels[req.user._id];
+		if (gameOver(world)) {
+			delete activeDuels[req.user._id];
+		}
+		var frontEndWorld = createFrontEndWorld(world, req.user);
+		res.json(frontEndWorld);
+	})
+	
 	appServer.delete("/rest/duel", auth, function(req, res) {
 		res.send(200);
 	})
+	
+	function gameOver(world) {
+		return world.player1.character.attributes.hp <= 0 || world.player2.character.attributes.hp <= 0;
+	}
+	
+	function cleanUp(world, user) {
+		var winner = world.player1.character.attributes.hp <= 0 ? world.player2.user : world.player1.user;
+		var loser = world.player1.character.attributes.hp <= 0 ? world.player1.user : world.player2.user;
+		//updateStats(winner, loser);
+		delete activeDuels[user._id];
+	}
 	
 	var createFrontEndWorld = function(world, user) {
 		var playerCharacter;
