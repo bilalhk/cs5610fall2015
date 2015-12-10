@@ -9,7 +9,8 @@
 		model.$location = $location;
 		
 		var baseSidebarNavs = [{name: "Start Game", link: "#/new_game"},
-							   {name: "Leaderboard", link: "#/leaderboard"}];
+							   {name: "Leaderboard", link: "#/leaderboard"},
+							   {name: "Doc", link: "#/doc"}];
 		
 		var clientSidebarNavs = [{name: "Profile", link: "#/profile"}];
 								 

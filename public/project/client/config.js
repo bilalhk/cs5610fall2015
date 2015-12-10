@@ -89,6 +89,10 @@
 				controller: "DuelQueueController",
 				controllerAs: "duelQueueModel"
 			})
+			.state("doc", {
+				url: "/doc",
+				templateUrl: "views/doc/doc.view.html"
+			})
 			.state("abilityGeneration", {
 				url: "/ability_generation",
 				templateUrl: "views/ability_generation/ability_gen.view.html",
