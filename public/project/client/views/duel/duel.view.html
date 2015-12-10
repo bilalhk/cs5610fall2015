@@ -1,39 +1,29 @@
-<div class="container-fluid">
-	<div class="row">
-		
-		<!-- player -->
-		<div class="col-sm-12 col-md-5">
-			<div class="container-fluid">
-				<!-- Character card -->
-				<div class="row">
-					<div class="col-sm-12">
-						<div ui-view="thisPlayer"></div>
-					</div>
-				</div>
-				<!-- Drop down action -->
-				<div class="row">
-					<div class="col-sm-8">
-						<select ng-model="duelModel.selectedAbilityIndex">
-							<option ng-repeat="ability in duelModel.world.player.abilities" value="{{$index}}">{{ability.name}}</option>
-						</select>
-					</div>
-					<div class="col-sm-4">
-						<button class="btn btn-default" ng-click="duelModel.submitMove()">Submit Move</button>
-					</div>
-				</div>
-			</div>
-			
-		</div>
-		
-		<!-- Opponent -->
-		<div class="col-sm-12 col-md-5">
-			<div ui-view="otherPlayer"></div>
-		</div>
-		
-		<!-- Message -->
-		<div class="col-sm-12">
-			<p class="text-center"><{{duelModel.message}}</p>
-		</div>
-		
+<div class="row">
+	
+	<!-- Message -->
+	<div class="col-xs-12">
+		<h3 class="text-center">{{duelModel.message}}</h3>
 	</div>
+	
+	<!-- player -->
+	<div class="col-xs-12 col-md-5">
+		<div class="row">
+			<!-- Character card -->
+			<div class="col-xs-12 col-sm-12" ui-view="thisPlayer"></div>
+			<!-- Drop down action -->
+			<div class="col-xs-12 margin-top">
+				<select class="col-xs-12" ng-model="duelModel.selectedAbilityIndex">
+					<option ng-repeat="ability in duelModel.world.player.abilities" value="{{$index}}">{{ability.name}}</option>
+				</select>
+			</div>
+			<!-- Submit Move -->
+			<div class="col-xs-12 margin-top margin-bottom">
+				<button class="btn btn-primary btn-block" ng-click="duelModel.submitMove()">Attack</button>
+			</div>
+		</div>		
+	</div>
+	
+	<!-- Opponent -->
+	<div class="col-xs-12 col-sm-12 col-md-5 col-md-offset-2" ui-view="otherPlayer"></div>
+	
 </div>

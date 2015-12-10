@@ -15,6 +15,10 @@
 			})
 		}
 		
+		model.startGame = function() {
+			$state.go("duelQueue");
+		}
+		
 	}
 	
 })();

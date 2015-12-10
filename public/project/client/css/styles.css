@@ -27,3 +27,15 @@
 .margin-bottom {
 	margin-bottom: 20px;
 }
+
+.margin-top {
+	margin-top: 20px;
+}
+
+.opponent {
+	background-color: salmon;
+}
+
+.player {
+	background-color: lightblue;
+}

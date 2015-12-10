@@ -1,9 +1,11 @@
-<div class="container-fluid">
-	<div class="bordered">
-		<img src="views/images/avatar_blank.jpg" class="img-responsive center-block">
-		<div class="row text-center" ng-repeat="(key, value) in cardModel.character.attributes">
-			<h4 class="col-xs-6">{{key}}</h4>
-			<h4 class="col-xs-6">{{value}}</h4>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="bordered">
+			<img src="views/images/avatar_blank.jpg" class="img-responsive center-block">
+			<div class="row text-center" ng-repeat="(key, value) in cardModel.character.attributes">
+				<h4 class="col-xs-6">{{key}}</h4>
+				<h4 class="col-xs-6">{{value}}</h4>
+			</div>
 		</div>
-	</div>
+	</div>	
 </div>
