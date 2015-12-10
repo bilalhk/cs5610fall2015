@@ -22,13 +22,13 @@ module.exports = function(appServer, authClient, playerQueue, playerSet, activeD
 			var frontEndWorld = createFrontEndWorld(world, req.user);
 			res.json(frontEndWorld);
 		} else if (playerQueue.length > 1) {
-			/*var player1Index = playerQueue.findIndex(function(player, index, array) {
-				return player.user._id == req.user._id;
+			var player1 = playerQueue.filter(function(player, index, array) {
+				return strEq(new String(player.user._id), new String(req.user._id));
+			})[0];
+			playerQueue = playerQueue.filter(function(player, index, array) {
+				return player.user._id != req.user._id;
 			});
-			var player1 = playerQueue[player1Index];
-			playerQueue.splice(player1Index, 1);*/
 			var player2 = playerQueue.pop();
-			var player1 = playerQueue.pop();
 			var world = new World(player1, player2);
 			world.initialize();
 			activeDuels[player1.user._id] = world;
