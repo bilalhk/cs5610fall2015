@@ -56,14 +56,6 @@ module.exports = (function(){
 	
 })();
 
-// Basic Attack
-/*function(world) {
-		var target = world.player1.isPlayerTurn ? world.player2 : world.player1;
-		var attacker = world.player1.isPlayerTurn ? world.player1 : world.player2;
-		var damage = Math.round(attacker.character.attributes.strength * .1);
-		target.character.attributes.hp = target.character.attributes.hp - damage;
-}*/
-
 // Enhanced Attack
 /*function(world) {
 	var target = world.player1.isPlayerTurn ? world.player2 : world.player1;

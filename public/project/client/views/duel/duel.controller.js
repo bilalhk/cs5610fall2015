@@ -28,7 +28,6 @@
 						$scope.$broadcast("renderCharacter");
 						getPeriodicUpdates();
 					}, function failure(message) {
-						console.log(message);
 						model.message = message;
 					});
 			}

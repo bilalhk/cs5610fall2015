@@ -16,9 +16,7 @@
 		
 		model.addAbility = function(index) {
 			model.selectedAbility = model.availableAbilities[index];
-			console.log(model.selectedAbility);
 			characterService.addAbility(model.selectedAbility).then(function(response) {
-				console.log(response);
 				model.character = response.character;
 				model.message = response.message;
 				model.availableAbilities.splice(index, 1);

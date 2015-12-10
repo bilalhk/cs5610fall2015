@@ -22,8 +22,6 @@
 		];
 		
 		function populateFields(response) {
-			console.log("Hello");
-			console.log(response.data);
 			model.fields = response.data;
 		}
 		

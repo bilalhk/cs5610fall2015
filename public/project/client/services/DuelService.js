@@ -19,7 +19,6 @@
 		function addToQueue() {
 			var deferred = $q.defer();
 			$http.post("/rest/duel").then(function() {
-				console.log("called add to queue");
 				deferred.resolve();
 			})
 			
@@ -40,7 +39,6 @@
 			var deferred = $q.defer();
 			$http.get("/rest/queue/duel").then(function(response) {
 				currentWorld = response.data;
-				console.log(currentWorld);
 				deferred.resolve();
 			});
 			
