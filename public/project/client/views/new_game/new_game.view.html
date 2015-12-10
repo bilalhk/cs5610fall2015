@@ -1,28 +1,21 @@
-<div class="container-fluid">
-	<div class="row">
-		
-		<div class="col-sm-12">
-			<h2>Start New Game</h2>
+<!-- Searchbar -->
+<form class="form-horizontal">
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-4 label-align-left" for="inputHistoricalFigure">Name Of Celebrity</label>
+		<div class="col-xs-12 col-sm-8">
+			<input class="form-control" type="text" id="inputHistoricalFigure" placeholder="Name" ng-model="newGameModel.celebrityName">
 		</div>
-		
-		<!-- Searchbar -->
-		<div class="col-sm-12">
-			<form class="form-inline">
-		
-				<div class="form-group">
-					<label for="inputHistoricalFigure">Name Of Celebrity</label>
-					<input type="text" class="form-control" id="inputHistoricalFigure" placeholder="Name" ng-model="newGameModel.celebrityName">
-				</div>
-		
-				<div class="form-group">
-					<button type="submit" class="btn btn-primary" ng-click="newGameModel.createCharacter()">Create Character</button>
-				</div>
-		
-			</form>
+	</div>
+
+	<div class="form-group">
+		<div class="col-xs-12 col-sm-8 col-sm-offset-4">
+			<button type="submit" class="btn btn-primary btn-block" ng-click="newGameModel.createCharacter()">Create Character</button>
 		</div>
-		
-		<!-- Character card and ability selector -->
-		<div class="col-sm-12" ui-view></div>
-		
-	</div>	
+	</div>
+</form>	
+
+<!-- Character card and ability selector -->
+<div class="row">
+	<div class="col-xs-12 col-sm-12" ui-view></div>
 </div>
+

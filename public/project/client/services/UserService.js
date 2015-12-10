@@ -10,8 +10,10 @@
 			guestLogin: guestLogin,
 			logout: logout,
 			register: register,
+			update: update,
 			adminAuth: adminAuth,
 			getUserStats: getUserStats,
+			getLeaderboard: getLeaderboard,
 			getCurrentUser: getCurrentUser
 		};
 		
@@ -30,6 +32,16 @@
 				$rootScope.loggedIn = true;
 				deferred.resolve(currentUser);
 			});
+			
+			return deferred.promise;
+		}
+		
+		function getUserStats() {
+			var deferred = $q.defer();
+			var url = "/rest/user/" + currentUser._id + "/stats";
+			$http.get(url).then(function(response) {
+				deferred.resolve(response.data);
+			})
 			
 			return deferred.promise;
 		}
@@ -72,10 +84,21 @@
 		}
 		
 		// -> Promise([Stats])
-		function getUserStats() {
+		function getLeaderboard() {
 			var deferred = $q.defer();
-			$http.get("/rest/user/stats").then(function(response) {
+			$http.get("/rest/user/leaderboard").then(function(response) {
 				deferred.resolve(response.data);
+			})
+			
+			return deferred.promise;
+		}
+		
+		// User -> Promise()
+		function update(user) {
+			var deferred = $q.defer();
+			$http.put("/rest/user", user).then(function(response) {
+				currentUser = response.data;
+				deferred.resolve();
 			})
 			
 			return deferred.promise;

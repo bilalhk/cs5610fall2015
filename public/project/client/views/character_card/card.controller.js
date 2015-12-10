@@ -8,7 +8,6 @@
 		var model = this;
 		
 		$scope.$on("characterGeneration", function(event, character) {
-			model.test = character.name;
 			model.character = character;
 		})
 		

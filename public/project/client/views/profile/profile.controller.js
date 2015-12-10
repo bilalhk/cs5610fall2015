@@ -3,11 +3,13 @@
 	
 	angular.module("YeOldArena").controller("ProfileController", profileController);
 	
-	function profileController(userService) {
+	function profileController($state, userService) {
 		
 		var model = this;
+		model.$state = $state;
+		model.user = userService.getCurrentUser();
 		
-		model.user = userService.currentUser;
+		$state.go("profile.edit");
 	}
 	
 })();

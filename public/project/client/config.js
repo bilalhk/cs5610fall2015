@@ -28,6 +28,16 @@
 				controller: "ProfileController",
 				controllerAs: "profileModel"
 			})
+			.state("profile.edit", {
+				templateUrl: "views/profile/edit/edit.view.html",
+				controller: "ProfileEditController",
+				controllerAs: "profileEditModel"
+			})
+			.state("profile.stats", {
+				templateUrl: "views/profile/stats/stats.view.html",
+				controller: "ProfileStatsController",
+				controllerAs: "profileStatsModel"
+			})
 			.state("new_game", {
 				url: "/new_game",
 				templateUrl: "views/new_game/new_game.view.html",
@@ -70,11 +80,6 @@
 				templateUrl: "views/leaderboard/users/users.view.html",
 				controller: "LeaderboardUsersController",
 				controllerAs: "leaderboardUsersModel"
-			})
-			.state("leaderboard.characters", {
-				templateUrl: "views/leaderboard/characters/characters.view.html",
-				controller: "LeaderboardCharactersController",
-				controllerAs: "leaderboardCharactersModel"
 			})
 			.state("register", {
 				templateUrl: "views/register/register.view.html"

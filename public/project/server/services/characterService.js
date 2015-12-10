@@ -26,9 +26,6 @@ module.exports = function(appServer, passport, auth, abilities) {
 					name = characterBioJSON.name;
 				}
 				var character = new Character(name, attributes);
-				character.abilities.push(abilities.find(function(ability, index, array) {
-					return ability.name == "Basic Attack";
-				}))
 				req.session.character = character;
 				res.json(character);
 			})

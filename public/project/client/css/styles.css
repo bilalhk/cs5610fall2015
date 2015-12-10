@@ -6,3 +6,24 @@
 	width: 106px;
 	height: 106px;
 }
+
+.button-margin {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.guest-login-margin {
+	margin-top: 20px;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.profile-tab-margin {
+	margin-top: 20px;
+}
+
+.margin-bottom {
+	margin-bottom: 20px;
+}

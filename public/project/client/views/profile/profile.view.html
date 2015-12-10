@@ -1,7 +1,22 @@
 <div class="container-fluid">
 	<div class="row">
+		
 		<div class="col-sm-12">
-			<h2>Welcome {{profileModel.user.username}}!</h2>	
+			<h2>Welcome, {{profileModel.user.username}}</h2>
 		</div>
-	</div>	
+		
+		<!-- Leaderboard tabs -->
+		<div class="col-sm-12">
+			<nav>
+				<ul class="nav nav-tabs">
+					<li role="presentation" ng-class="{active: leaderboardModel.$state.includes('profile.edit')}"><a ui-sref="profile.edit">Edit Profile</a></li>
+					<li role="presentation" ng-class="{active: profileModel.$state.includes('profile.stats')}"><a ui-sref="profile.stats">Stats</a></li>
+				</ul>
+			</nav>
+		</div>
+		
+		<!-- Tab content -->
+		<div class="col-sm-12" ui-view></div>
+		
+	</div>
 </div>

@@ -30,12 +30,13 @@
     <script src="views/header/header.controller.js"></script>
     <script src="views/sidebar/sidebar.controller.js"></script>
     <script src="views/profile/profile.controller.js"></script>
+    <script src="views/profile/edit/edit.controller.js"></script>
+    <script src="views/profile/stats/stats.controller.js"></script>
     <script src="views/new_game/new_game.controller.js"></script>
     <script src="views/new_game/character/ability.controller.js"></script>
     <script src="views/character_card/card.controller.js"></script>
     <script src="views/leaderboard/leaderboard.controller.js"></script>
     <script src="views/leaderboard/users/users.controller.js"></script>
-    <script src="views/leaderboard/characters/characters.controller.js"></script>
     <script src="views/ability_generation/ability_gen.controller.js"></script>
     <script src="views/duel/duel.controller.js"></script>
     <script src="views/duel/opponentCharacterController.js"></script>
@@ -54,10 +55,10 @@
       <div class="row">
         
         <!-- Sidebar -->
-        <div class="col-sm-2 col-md-1 sidebar" ng-include="'views/sidebar/sidebar.view.html'" ng-controller="SidebarController as sidebarModel" ng-if="loggedIn"></div>
+        <div class="col-xs-2 col-md-2 sidebar" ng-include="'views/sidebar/sidebar.view.html'" ng-controller="SidebarController as sidebarModel" ng-if="loggedIn"></div>
         
         <!-- Main -->
-        <div class="col-sm-10 col-md-11 col-sm-offset-2 col-md-offset-1 main" ui-view></div>
+        <div class="col-xs-10 col-md-10 main" ng-class="{'col-xs-offset-2': loggedIn, 'col-md-offset-2': loggedIn}" ui-view></div>
         
       </div>
     </div>

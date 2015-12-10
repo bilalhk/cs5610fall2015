@@ -6,7 +6,7 @@
 		
 		var model = this;
 		
-		userService.getUserStats().then(function(leaderboardEntries) {
+		userService.getLeaderboard().then(function(leaderboardEntries) {
 			model.leaderboardEntries = leaderboardEntries;
 		})
 									 
