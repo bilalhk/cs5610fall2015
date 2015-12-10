@@ -1,11 +1,9 @@
 "use strict"
 
-module.exports = class {
+module.exports = function(name, attributes) {
 	
-	constructor(name, attributes) {
-		this.name = name;
-		this.attributes = attributes;
-		this.abilities = [];
-	}
+	this.name = name;
+	this.attributes = attributes;
+	this.abilities = [];
 	
 }
