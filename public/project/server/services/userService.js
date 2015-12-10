@@ -22,19 +22,19 @@ module.exports = function(appServer, UserModel, passport, authClient, authAdmin)
 	})
 	
 	appServer.get("/loggedIn/client", authClient, function(req, res) {
-		var index = req.user.roles.findIndex(function(role, index, array) {
+		var isClient = req.user.roles.some(function(role, index, array) {
 			return role == "client";
 		})
 		
-		index == -1 ? res.json(false) : res.json(true);
+		isClient ? res.json(true) : res.json(false);
 	})
 	
 	appServer.get("/loggedIn/admin", authAdmin, function(req, res) {
-		var index = req.user.roles.findIndex(function(role, index, array) {
+		var isAdmin = req.user.roles.some(function(role, index, array) {
 			return role == "admin";
 		})
 		
-		index == -1 ? res.json(false) : res.json(true);
+		isAdmin ? res.json(true) : res.json(false);
 	})
 	
 	appServer.post("/logout", authClient, function(req, res) {

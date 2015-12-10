@@ -27,11 +27,9 @@ module.exports = (function(){
 		return this;
 	}
 	
-	// -> World
+	// -> Boolean
 	World.prototype.accept = function(ability) {
-		ability.visit(this);
-		
-		return this;
+		return ability.visit(this);
 	}
 	
 	// -> World
@@ -39,6 +37,8 @@ module.exports = (function(){
 		this.turnCounter++;
 		this.player1.turnMeter = this.player1.turnMeter - this.player1.character.attributes.speed;
 		this.player2.turnMeter = this.player2.turnMeter - this.player2.character.attributes.speed;
+		this.player1.character.attributes.mana = this.player1.character.attributes.mana + 3;
+		this.player2.character.attributes.mana = this.player2.character.attributes.mana + 3;
 		if (this.player1.turnMeter < this.player2.turnMeter) {
 			this.player1.isPlayerTurn = true;
 			this.player2.isPlayerTurn = false;
@@ -56,9 +56,25 @@ module.exports = (function(){
 	
 })();
 
+// Basic Attack
 /*function(world) {
 		var target = world.player1.isPlayerTurn ? world.player2 : world.player1;
 		var attacker = world.player1.isPlayerTurn ? world.player1 : world.player2;
 		var damage = Math.round(attacker.character.attributes.strength * .1);
 		target.character.attributes.hp = target.character.attributes.hp - damage;
+}*/
+
+// Enhanced Attack
+/*function(world) {
+	var target = world.player1.isPlayerTurn ? world.player2 : world.player1;
+	var attacker = world.player1.isPlayerTurn ? world.player1 : world.player2;
+	if (attacker.character.attributes.mana >= 20) {
+		attacker.character.attributes.mana = attacker.character.attributes.mana - 20;
+		var damage = Math.round(attacker.character.attributes.strength * .2);
+		target.character.attributes.hp = target.character.attributes.hp - damage;
+		
+		return true;
+	}
+	
+	return false;
 }*/

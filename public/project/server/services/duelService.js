@@ -48,16 +48,19 @@ module.exports = function(appServer, authClient, playerQueue, playerSet, activeD
 		if (gameOver(world)) {
 			res.status(400).send("The game has ended");
 		} else {
-			var ability = abilities.find(function(ability, index, array) {
+			var ability = abilities.filter(function(ability, index, array) {
 				return ability.name === abilityName;
-			})
-			world.accept(ability);
-			world.next();
-			if (gameOver(world)) {
-				cleanUp(world, req.user);
+			})[0];
+			if (world.accept(ability)) {
+				world.next();
+				if (gameOver(world)) {
+					cleanUp(world, req.user);
+				}
+				var frontEndWorld = createFrontEndWorld(world, req.user);
+				res.json(frontEndWorld);
+			} else {
+				res.status(400).send("Invalid Move.");
 			}
-			var frontEndWorld = createFrontEndWorld(world, req.user);
-			res.json(frontEndWorld);
 		}
 	})
 	

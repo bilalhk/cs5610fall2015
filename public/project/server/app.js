@@ -56,19 +56,19 @@ module.exports = function(appServer, mongoose) {
 	})
 	
 	function authClient(req, res, next) {
-		var index = req.user.roles.findIndex(function(role, index, array) {
+		var isClient = req.user.roles.some(function(role, index, array) {
 			return role == "admin" || role == "client" || role == "guest";
 		})
 		
-		index == -1 ? res.send(401) : next();
+		isClient ? next() : res.send(401);
 	}
 	
 	function authAdmin(req, res, next) {
-		var index = req.user.roles.findIndex(function(role, index, array) {
+		var isAdmin = req.user.roles.some(function(role, index, array) {
 			return role == "admin";
 		})
 		
-		index == -1 ? res.send(401) : next();
+		isAdmin ? next() : res.send(401);
 	}
 	
 	// Queue for matchmaking.

@@ -35,10 +35,9 @@ module.exports = function(appServer, passport, auth, abilities) {
 	appServer.post("/rest/character/ability", auth, function(req, res) {
 		var abilityName = req.body.name;
 		var character = req.session.character;
-		var abilityIndex = abilities.findIndex(function(ability, index, array) {
+		var ability = abilities.filter(function(ability, index, array) {
 			return abilityName == ability.name;
-		});
-		var ability = abilities[abilityIndex];
+		})[0];
 		if (character.attributes.wisdom >= ability.wisdomCost) {
 			character.abilities.push(ability);
 			character.attributes.wisdom = character.attributes.wisdom - ability.wisdomCost;
@@ -52,17 +51,22 @@ module.exports = function(appServer, passport, auth, abilities) {
 	
 	appServer.delete("/rest/character/ability/:name", auth, function(req, res) {
 		var name = req.params.name;
-		var character = req.session.character;
-		var abilityIndex = abilities.findIndex(function(ability, index, array) {
-			return name == ability.name;
-		});
-		if (abilityIndex != -1) {
-			var ability = abilities[abilityIndex];
-			character.abilities.splice(abilityIndex, 1);
-			character.attributes.wisdom = character.attributes.wisdom + ability.wisdomCost;
-			res.json(character); 
-		} else {
+		if (name == "Basic Attack") {
 			res.send(400);
+		} else {
+			var character = req.session.character;
+			var elem = abilities.filter(function(ability, index, array) {
+				return name == ability.name;
+			});
+			var abilityIndex = abilities.indexOf(elem);
+			if (abilityIndex != -1) {
+				var ability = abilities[abilityIndex];
+				character.abilities.splice(abilityIndex, 1);
+				character.attributes.wisdom = character.attributes.wisdom + ability.wisdomCost;
+				res.json(character); 
+			} else {
+				res.send(400);
+			}
 		}
 	})
 	

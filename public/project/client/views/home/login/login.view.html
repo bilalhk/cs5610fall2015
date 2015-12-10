@@ -1,32 +1,32 @@
 <div class="row">
 	<div class="col-sm-12">
 
-		<form class="col-sm-12 form-horizontal">
+		<form class="form-horizontal">
 			<div class="form-group">
-				<label for="loginUserName" class="col-sm-3 col-md-3">Username</label>
-				<div class="col-sm-12 col-md-9">
+				<label for="loginUserName" class="col-sm-3 col-md-4">Username</label>
+				<div class="col-sm-12 col-md-8">
 					<input type="text" class="form-control" id="loginUserName" placeholder="Username" ng-model="loginModel.username">
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label for="loginPassword" class="col-sm-3 col-md-3">Password</label>
-				<div class="col-sm-12 col-md-9">
+				<label for="loginPassword" class="col-sm-3 col-md-4">Password</label>
+				<div class="col-sm-12 col-md-8">
 					<input type="password" class="form-control" id="loginPassword" placeholder="Password" ng-model="loginModel.password">
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<div class="col-md-offset-3 col-sm-12 col-md-9 button-margin">
+				<div class="col-sm-12 col-md-8 col-md-offset-4 button-margin">
 					<button type="submit" class="btn btn-primary btn-block" ng-click="loginModel.login()">Login</button>
 				</div>
 				
-				<div class="col-md-offset-3 col-sm-12 col-md-9">
+				<div class="col-sm-12 col-md-8 col-md-offset-4">
 					<p>New to YeOldArena? <span><a ui-sref="home.register">Register Now</a></span></p>
 				</div>
 				
-				<p class="col-md-offset-3 col-sm-12 col-md-9 guest-login-margin">Don't wanna register yet? Log in as a guest instead!</p>
-				<div class="col-md-offset-3 col-sm-12 col-md-9">
+				<p class="col-sm-12 col-md-8 col-md-offset-4 guest-login-margin">Don't wanna register yet? Log in as a guest instead!</p>
+				<div class="col-sm-12 col-md-8 col-md-offset-4">
 					<button type="submit" class="btn btn-warning btn-block" ng-click="loginModel.guestLogin()">Guest Login</button>
 				</div>
 			</div>
