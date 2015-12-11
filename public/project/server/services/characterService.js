@@ -55,10 +55,10 @@ module.exports = function(appServer, passport, auth, abilities) {
 			res.send(400);
 		} else {
 			var character = req.session.character;
-			var elem = abilities.filter(function(ability, index, array) {
-				return name == ability.name;
-			});
-			var abilityIndex = abilities.indexOf(elem);
+			var abilityIndex = -1;
+			character.abilities.forEach(function(ability, index, array) {
+				if (ability.name == name) abilityIndex = index;
+			})
 			if (abilityIndex != -1) {
 				var ability = abilities[abilityIndex];
 				character.abilities.splice(abilityIndex, 1);
